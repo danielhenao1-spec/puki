@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROYECTO: MEET THE MASTERS - Preescolar Puki</title>
+  
+  <!-- Tipografías Oficiales de la Guía Visual -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Librería para generar e imprimir la imagen final -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    /* =========================================================
+       PALETA DE COLORES OFICIAL PREESCOLAR PUKU (60-30-10)
+       Base Crema: #FDF8F0 | Primarios: #24314C & #F5B324
+       Acentos: #E22933, #1B549F, #008C51
+       ========================================================= */
+    :root {
+      --bg-cream: #FDF8F0;
+      --navy-blue: #24314C;
+      --sun-yellow: #F5B324;
+      --vibrant-red: #E22933;
+      --royal-blue: #1B549F;
+      --emerald-green: #008C51;
+      --font-title: 'Averia Libre', cursive, sans-serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--navy-blue);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Interfaz Editable para Móvil y Pantalla */
+    .app-container {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      border: 4px solid var(--sun-yellow);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(36, 49, 76, 0.1);
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      border-bottom: 3px dashed var(--sun-yellow);
+      padding-bottom: 15px;
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-img {
+      max-height: 75px;
+      object-fit: contain;
+    }
+
+    .header-titles h1 {
+      font-family: var(--font-title);
+      color: var(--navy-blue);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .header-titles p {
+      color: var(--royal-blue);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .sala-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .sala-selector label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy-blue);
+    }
+
+    .sala-selector input {
+      padding: 8px 12px;
+      border: 2px solid var(--navy-blue);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      outline: none;
+      background-color: var(--bg-cream);
+    }
+
+    /* Formulario de Asignación */
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 900px) {
+      .editor-grid {
+        grid-template-columns: 280px 1fr;
+      }
+    }
+
+    .mascot-sidebar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-cream);
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      border: 2px solid var(--sun-yellow);
+    }
+
+    .mascot-sidebar img {
+      max-width: 180px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .mascot-sidebar span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy-blue);
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table.form-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    table.form-table th {
+      background-color: var(--navy-blue);
+      color: #ffffff;
+      font-family: var(--font-title);
+      padding: 12px;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    table.form-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 0.9rem;
+    }
+
+    table.form-table tr:nth-child(even) {
+      background-color: var(--bg-cream);
+    }
+
+    table.form-table input.student-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 2px solid var(--sun-yellow);
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--navy-blue);
+      outline: none;
+      background: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    table.form-table input.student-input:focus {
+      border-color: var(--royal-blue);
+    }
+
+    .actions-bar {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .btn-download {
+      background-color: var(--vibrant-red);
+      color: #ffffff;
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(226, 41, 51, 0.3);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn-download:hover {
+      background-color: #c81e28;
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       PLANTILLA HORIZONTAL OCULTA PARA EXPORTACIÓN EN ALTA RES
+       ========================================================= */
+    #export-canvas {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      width: 1920px;
+      height: 1080px;
+      background-color: var(--bg-cream);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 12px solid var(--sun-yellow);
+    }
+
+    .canvas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 20px 30px;
+      border-radius: 20px;
+      border: 4px solid var(--navy-blue);
+    }
+
+    .canvas-header-left {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .canvas-logo {
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .canvas-titles h1 {
+      font-family: var(--font-title);
+      font-size: 2.8rem;
+      color: var(--navy-blue);
+      letter-spacing: 1px;
+    }
+
+    .canvas-titles p {
+      color: var(--royal-blue);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .canvas-sala-badge {
+      background: var(--sun-yellow);
+      color: var(--navy-blue);
+      font-family: var(--font-title);
+      font-size: 1.5rem;
+      padding: 10px 25px;
+      border-radius: 12px;
+      border: 2px solid var(--navy-blue);
+    }
+
+    .canvas-body {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 30px;
+      height: 860px;
+      margin-top: 25px;
+    }
+
+    .canvas-mascot-container {
+      background: #ffffff;
+      border: 4px solid var(--navy-blue);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .canvas-mascot-container img {
+      width: 100%;
+      max-height: 700px;
+      object-fit: contain;
+    }
+
+    .canvas-table-container {
+      background: #ffffff;
+      border: 4px solid var(--navy-blue);
+      border-radius: 20px;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .canvas-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .canvas-table th {
+      background-color: var(--navy-blue);
+      color: #ffffff;
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .canvas-table td {
+      padding: 6px 12px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 0.95rem;
+      color: var(--navy-blue);
+    }
+
+    .canvas-table tr:nth-child(even) {
+      background-color: var(--bg-cream);
+    }
+
+    .canvas-student-name {
+      font-weight: 700;
+      color: var(--emerald-green);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Interfaz Accesible y Reutilizable -->
+  <div class="app-container">
+    <header>
+      <div class="header-branding">
+        <img src="imagenes/Logo PUKI.png" alt="Logo Puki Playground" class="logo-img">
+        <div class="header-titles">
+          <h1>PROYECTO: MEET THE MASTERS</h1>
+          <p>¡Nuestros niños reciben a los grandes personajes de la historia!</p>
+        </div>
+      </div>
+      <div class="sala-selector">
+        <label for="sala-input">Sala / Nivel:</label>
+        <input type="text" id="sala-input" placeholder="Ej: Sala Maternal A" value="Sala A">
+      </div>
+    </header>
+
+    <div class="editor-grid">
+      <div class="mascot-sidebar">
+        <img src="imagenes/Mascota - Yellow El Leon.png" alt="Mascota Yellow El León">
+        <span>Añade los nombres de tus estudiantes. Luego presiona el botón para descargar la plantilla final.</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="form-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Personaje</th>
+              <th>Estudiante Asignado</th>
+            </tr>
+          </thead>
+          <tbody id="master-rows">
+            <!-- Las filas se cargan dinámicamente mediante JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="actions-bar">
+      <button class="btn-download" onclick="generateImage()">📷 Descargar Plantilla en PNG</button>
+    </div>
+  </div>
+
+  <!-- Lienzo Oculto para Exportación Horizontal (1920x1080) -->
+  <div id="export-canvas">
+    <div class="canvas-header">
+      <div class="canvas-header-left">
+        <img src="imagenes/Logo PUKI.png" alt="Logo Puki" class="canvas-logo">
+        <div class="canvas-titles">
+          <h1>PROYECTO: MEET THE MASTERS</h1>
+          <p>¡Nuestros niños reciben a los grandes personajes de la historia!</p>
+        </div>
+      </div>
+      <div class="canvas-sala-badge" id="canvas-sala-text">
+        Sala A
+      </div>
+    </div>
+
+    <div class="canvas-body">
+      <div class="canvas-mascot-container">
+        <img src="imagenes/Mascota - Yellow El Leon.png" alt="Yellow El León">
+      </div>
+      <div class="canvas-table-container">
+        <table class="canvas-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Personaje</th>
+              <th>Estudiante Asignado</th>
+            </tr>
+          </thead>
+          <tbody id="canvas-rows">
+            <!-- Filas copiadas para exportar -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cronograma oficial del proyecto Meet The Masters
+    const scheduleData = [
+      { date: "Nov. 2", master: "José Gregorio Hernández" },
+      { date: "Nov. 9", master: "Wolfgang Mozart" },
+      { date: "Nov. 16", master: "Vincent Van Gogh" },
+      { date: "Nov. 23", master: "Walt Disney" },
+      { date: "Nov. 30", master: "Frida Kahlo" },
+      { date: "Ene. 18", master: "Pelé" },
+      { date: "Ene. 25", master: "Leonardo da Vinci" },
+      { date: "Feb. 1", master: "Steve Jobs" },
+      { date: "Feb. 15", master: "Yayoi Kusama" },
+      { date: "Feb. 22", master: "Louis Braille" },
+      { date: "Mar. 1", master: "Usain Bolt" },
+      { date: "Mar. 8", master: "Jane Goodall" },
+      { date: "Mar. 15", master: "Ole Kirk Christiansen" },
+      { date: "Mar. 29", master: "Christina Koch" },
+      { date: "Abr. 5", master: "Hans Christian Andersen" },
+      { date: "Abr. 12", master: "Albert Einstein" },
+      { date: "Abr. 20", master: "Gandhi" },
+      { date: "Abr. 26", master: "Henry Ford" },
+      { date: "May. 3", master: "Antoni Gaudí" },
+      { date: "May. 10", master: "Charles Chaplin" },
+      { date: "May. 31", master: "Ludwig Van Beethoven" },
+      { date: "Jun. 7", master: "Jacques Cousteau" },
+      { date: "Jun. 14", master: "Dr. José Antonio Abreu" }
+    ];
+
+    // Cargar tabla editable al iniciar
+    const tbody = document.getElementById('master-rows');
+    scheduleData.forEach((item, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${item.date}</strong></td>
+        <td>${item.master}</td>
+        <td>
+          <input type="text" class="student-input" id="student-${index}" placeholder="Escribir nombre...">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Función para procesar y descargar la imagen PNG
+    function generateImage() {
+      const salaName = document.getElementById('sala-input').value || 'Puki';
+      document.getElementById('canvas-sala-text').innerText = salaName;
+
+      const canvasTbody = document.getElementById('canvas-rows');
+      canvasTbody.innerHTML = '';
+
+      scheduleData.forEach((item, index) => {
+        const studentValue = document.getElementById(`student-${index}`).value || '—';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${item.date}</strong></td>
+          <td>${item.master}</td>
+          <td class="canvas-student-name">${studentValue}</td>
+        `;
+        canvasTbody.appendChild(tr);
+      });
+
+      const exportElement = document.getElementById('export-canvas');
+
+      html2canvas(exportElement, {
+        scale: 2, // Alta resolución para impresión
+        useCORS: true,
+        backgroundColor: '#FDF8F0'
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Meet_The_Masters_${salaName.replace(/\s+/g, '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
