@@ -32,28 +32,40 @@ La experiencia está diseñada **exclusivamente para orientación horizontal**. 
 - Con teclado: `←` y `→` cambian de personaje; dentro de la línea del tiempo también funcionan `↑`, `↓`, `Inicio` y `Fin`.
 - La URL guarda el personaje activo, por ejemplo `index.html#albert-einstein`, para poder abrirlo directamente.
 
+## Publicar en Vercel
+
+El repositorio ya está preparado para importarse desde Vercel:
+
+1. Entra a [vercel.com/new](https://vercel.com/new) e importa el repositorio `danielhenao1-spec/puki`.
+2. En **Root Directory**, selecciona `meet-the-masters`.
+3. Usa **Framework Preset: Other**.
+4. Deja vacío **Build Command** y **Output Directory** (no hay compilación).
+5. Pulsa **Deploy**.
+
+Con ese ajuste, la app se publica en la raíz del dominio de Vercel:
+
+```
+https://TU-PROYECTO.vercel.app/
+```
+
+Cada subida a la rama `main` volverá a desplegar el proyecto automáticamente.
+
 ## Vista previa al compartir por WhatsApp
 
 La tarjeta social está creada en `imagenes/compartir-whatsapp.jpg` (1200 × 630 px) e incluye el logo de Puki, el título **PROYECTO: MEET THE MASTERS** y la frase **¡Nuestros niños reciben a los grandes personajes de la historia!**
 
-Para que WhatsApp muestre esa tarjeta, la aplicación debe estar publicada en una **dirección web pública con HTTPS**. Un archivo abierto como `file:///...` o `http://localhost` no puede generar vista previa para otras personas.
+Para que WhatsApp muestre esa tarjeta, la aplicación debe estar publicada en una **dirección web pública con HTTPS**. Vercel proporciona HTTPS automáticamente; un archivo abierto como `file:///...` o `http://localhost` no puede generar vista previa para otras personas.
 
-Antes de publicar, abre `index.html` y sustituye las **dos apariciones** de:
+Cuando Vercel te asigne la URL de producción, abre `index.html` y sustituye las **dos apariciones** de:
 
 ```
 https://TU-DOMINIO.com/
 ```
 
-por la URL pública real de la carpeta. Por ejemplo, al publicar este repositorio en GitHub Pages con la app dentro de `meet-the-masters/`:
-
-```
-https://danielhenao1-spec.github.io/puki/meet-the-masters/
-```
-
-Debe quedar así en las etiquetas `og:image` y `twitter:image`:
+por esa URL. Debe quedar así en las etiquetas `og:image` y `twitter:image`:
 
 ```html
-<meta property="og:image" content="https://TU-SITIO.com/meet-the-masters/imagenes/compartir-whatsapp.jpg">
+<meta property="og:image" content="https://TU-PROYECTO.vercel.app/imagenes/compartir-whatsapp.jpg">
 ```
 
 La imagen debe ser accesible abriendo esa misma URL directamente en el navegador.
