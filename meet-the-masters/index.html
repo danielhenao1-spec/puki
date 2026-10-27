@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF8F0">
+  <meta name="description" content="PROYECTO: MEET THE MASTERS · ¡Nuestros niños reciben a los grandes personajes de la historia! Preescolar Puki.">
+  <title>PROYECTO: MEET THE MASTERS</title>
+
+  <!-- =========================================================
+       VISTA PREVIA AL COMPARTIR POR WHATSAPP
+       Reemplaza https://TU-DOMINIO.com/ por la URL pública real
+       donde se publique esta carpeta (siempre con https://).
+       Ejemplo:
+       https://preescolarpuki.com/meet-the-masters/
+
+       La imagen social vive en:
+       imagenes/compartir-whatsapp.jpg  (1200 × 630 px)
+       ========================================================= -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Preescolar Puki">
+  <meta property="og:title" content="PROYECTO: MEET THE MASTERS">
+  <meta property="og:description" content="¡Nuestros niños reciben a los grandes personajes de la historia!">
+  <meta property="og:image" content="https://TU-DOMINIO.com/imagenes/compartir-whatsapp.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Puki, Yellow y el título PROYECTO: MEET THE MASTERS">
+  <meta property="og:locale" content="es_VE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PROYECTO: MEET THE MASTERS">
+  <meta name="twitter:description" content="¡Nuestros niños reciben a los grandes personajes de la historia!">
+  <meta name="twitter:image" content="https://TU-DOMINIO.com/imagenes/compartir-whatsapp.jpg">
+  <meta name="twitter:image:alt" content="Puki, Yellow y el título PROYECTO: MEET THE MASTERS">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+  </noscript>
+
+  <link rel="icon" href="imagenes/Logo PUKI - marca.png" type="image/png">
+  <link rel="preload" as="image" href="imagenes/Crono-Visor.png">
+  <link rel="preload" as="image" href="imagenes/Logo PUKI - marca.png">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <!-- Pantalla de arranque -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot__inner">
+      <img class="boot__logo" src="imagenes/Logo PUKI - marca.png" alt="Preescolar Puki">
+      <div class="boot__machine" aria-hidden="true">
+        <span class="boot__ring"></span>
+        <span class="boot__ring"></span>
+        <span class="boot__core"></span>
+      </div>
+      <p class="boot__label">Calibrando el Crono-Visor</p>
+      <div class="boot__track"><span></span></div>
+    </div>
+  </div>
+
+  <!-- Fondo inmersivo de la época -->
+  <div class="ambient" id="ambient" aria-hidden="true">
+    <div class="ambient__layer is-active" id="ambientA" style="background-image:url('fondos/San Jose Gregorio Hernandez.jpg')"></div>
+    <div class="ambient__layer" id="ambientB"></div>
+    <div class="ambient__wash"></div>
+    <div class="ambient__vignette"></div>
+    <div class="ambient__glow"></div>
+    <div class="ambient__sparkles">
+      <i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+
+  <main class="app" id="app">
+    <div class="crono" id="crono">
+      <div class="crono__aura" aria-hidden="true"></div>
+      <img class="crono__frame" src="imagenes/Crono-Visor.png" alt="" aria-hidden="true">
+
+      <section class="screen" id="screen" aria-label="Crono-Visor de Meet The Masters">
+        <div class="screen__texture" aria-hidden="true"></div>
+
+        <header class="screen-head">
+          <div class="brand">
+            <img class="brand__logo" src="imagenes/Logo PUKI - marca.png" alt="Logo Preescolar Puki">
+            <div class="brand__copy">
+              <span class="brand__kicker">Preescolar Puki</span>
+              <span class="brand__name">Crono-Visor</span>
+            </div>
+          </div>
+
+          <div class="compact-title">
+            <span class="compact-title__project">Proyecto</span>
+            <strong>Meet The Masters</strong>
+            <span class="compact-title__line">¡Nuestros niños reciben a los grandes personajes de la historia!</span>
+          </div>
+
+          <div class="screen-head__tools">
+            <span class="season">
+              <span class="season__dot"></span>
+              <span>Temporada de maestros</span>
+            </span>
+            <span class="index-pill" aria-label="Personaje actual">
+              <span id="headIndex">01</span><span class="index-pill__sep">/</span><span class="index-pill__total">18</span>
+            </span>
+          </div>
+        </header>
+
+        <div class="workspace">
+          <aside class="timeline" aria-label="Agenda de viajes en el tiempo">
+            <div class="timeline__head">
+              <div class="timeline__heading">
+                <span class="eyebrow">Línea del tiempo</span>
+                <span class="timeline__title">Agenda de viajes</span>
+              </div>
+              <span class="timeline__count">18</span>
+            </div>
+
+            <div class="timeline__viewport" id="timelineViewport">
+              <div class="timeline__track" id="tablist" role="tablist" aria-orientation="vertical" aria-label="Fechas y personajes"></div>
+            </div>
+
+            <div class="timeline__foot">
+              <span class="timeline__foot-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                  <rect x="7" y="3.5" width="10" height="17" rx="5"></rect>
+                  <path d="M12 7v3"></path>
+                </svg>
+              </span>
+              <span>Desliza para explorar</span>
+            </div>
+          </aside>
+
+          <section class="stage" aria-label="Personaje seleccionado">
+            <figure class="mascot" id="mascotPanel">
+              <img class="mascot__bg" id="mascotBg" src="mascota/Yellow - San Jose Gregorio Hernandez.jpg" alt="" aria-hidden="true">
+              <div class="mascot__tint" aria-hidden="true"></div>
+              <div class="mascot__sparkles" aria-hidden="true">
+                <i></i><i></i><i></i>
+              </div>
+
+              <span class="mascot__tag">
+                <span class="mascot__tag-star" aria-hidden="true">★</span>
+                Yellow
+                <span class="mascot__tag-sub">tu guía</span>
+              </span>
+
+              <figcaption class="mascot__caption" id="mascotCaption">
+                <span class="mascot__caption-kicker">Mascota oficial</span>
+                <strong>Yellow</strong>
+                <span class="mascot__caption-line">Te acompaña en cada aventura</span>
+              </figcaption>
+            </figure>
+
+            <article class="info" id="infoPanel" role="tabpanel" tabindex="0" aria-labelledby="characterName" data-number="01">
+              <div class="info__body">
+                <div class="info__meta">
+                  <span class="date-badge" id="dateBadge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+                      <rect x="3.5" y="5.5" width="17" height="15" rx="3"></rect>
+                      <path d="M8 3.5v4M16 3.5v4M3.5 10h17"></path>
+                    </svg>
+                    <span class="date-badge__text">Nov. 2 al 6</span>
+                  </span>
+                  <span class="info__kicker">Personaje invitado</span>
+                </div>
+
+                <div class="info__identity">
+                  <h1 class="info__name" id="characterName">San José Gregorio Hernández</h1>
+                  <p class="info__role" id="characterRole">El Doctor Amigo</p>
+                </div>
+
+                <div class="info__divider" aria-hidden="true">
+                  <span></span>
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.2l2.7 7.1 7.1 2.7-7.1 2.7L12 21.8l-2.7-7.1L2.2 12l7.1-2.7L12 2.2z"></path>
+                  </svg>
+                  <span></span>
+                </div>
+
+                <div class="info__mission">
+                  <span class="info__mission-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 18h6"></path>
+                      <path d="M9.8 21h4.4"></path>
+                      <path d="M8.2 14.4A6.5 6.5 0 1 1 15.8 14.4c-.9.7-1.4 1.5-1.5 2.6h-4.6c-.1-1.1-.6-1.9-1.5-2.6z"></path>
+                      <path d="M12 2v1.4M4.5 5.5l1 1M19.5 5.5l-1 1"></path>
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="info__mission-label">Una pista del viaje</span>
+                    <p class="info__mission-text" id="characterFact">Médico venezolano que dedicó su vida a cuidar a los enfermos.</p>
+                  </div>
+                </div>
+
+                <div class="student-card">
+                  <span class="student-card__star" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2.5l2.8 6.6 7.2.6-5.5 4.8 1.7 7-6.2-3.8-6.2 3.8 1.7-7L2 9.7l7.2-.6L12 2.5z"></path>
+                    </svg>
+                  </span>
+                  <div class="student-card__copy">
+                    <span class="student-card__label">Alumno(a) asignado(a)</span>
+                    <strong class="student-card__name" id="studentName">Alan</strong>
+                    <span class="student-card__note">Será quien reciba a este gran maestro.</span>
+                  </div>
+                  <span class="student-card__number" id="studentNumber" aria-hidden="true">01</span>
+                </div>
+              </div>
+
+              <footer class="info__footer">
+                <div class="nav-arrows">
+                  <button class="arrow-btn" id="prevBtn" type="button" aria-label="Ver personaje anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M15 5l-7 7 7 7"></path>
+                    </svg>
+                  </button>
+                  <button class="arrow-btn" id="nextBtn" type="button" aria-label="Ver personaje siguiente">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="trip-progress">
+                  <span class="trip-progress__line" aria-hidden="true"><i id="tripProgressFill"></i></span>
+                  <span class="trip-progress__label">Viaje <strong id="tripIndex">01</strong> de 18</span>
+                </div>
+
+                <span class="key-hint" aria-hidden="true">
+                  <kbd>←</kbd><kbd>→</kbd> para viajar
+                </span>
+              </footer>
+            </article>
+          </section>
+        </div>
+      </section>
+
+      <p class="crono__hint" aria-hidden="true">
+        <span class="crono__hint-dot"></span>
+        Toca una fecha para viajar en el tiempo
+      </p>
+    </div>
+  </main>
+
+  <!-- Bloqueo de orientación vertical -->
+  <div class="rotate" id="rotate" role="dialog" aria-modal="true" aria-labelledby="rotateTitle">
+    <div class="rotate__grain" aria-hidden="true"></div>
+    <div class="rotate__card">
+      <img class="rotate__logo" src="imagenes/Logo PUKI - marca.png" alt="Preescolar Puki">
+      <div class="rotate__device" aria-hidden="true">
+        <span class="rotate__phone">
+          <span class="rotate__sun">★</span>
+        </span>
+        <span class="rotate__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8a9 9 0 0 1 15.5-2.5M20 16a9 9 0 0 1-15.5 2.5"></path>
+            <path d="M4 3v5h5M20 21v-5h-5"></path>
+          </svg>
+        </span>
+      </div>
+      <span class="rotate__eyebrow">Crono-Visor</span>
+      <h2 id="rotateTitle">Gira tu pantalla</h2>
+      <p>Este viaje por la historia se disfruta en horizontal. Gira tu dispositivo para entrar con todo el espacio de la máquina del tiempo.</p>
+      <span class="rotate__badge">
+        <span class="rotate__badge-dot" aria-hidden="true"></span>
+        Formato horizontal
+      </span>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
