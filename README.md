@@ -14,19 +14,13 @@ Aplicación web interactiva del **Preescolar Puki** para el proyecto **Meet The 
 
 El proyecto es un sitio estático que no requiere compilación.
 
-1. Importa este repositorio en [vercel.com/new](https://vercel.com/new).
-2. En **Root Directory**, selecciona `meet-the-masters`.
-3. Usa **Framework Preset: Other**.
-4. Deja vacíos **Build Command** y **Output Directory**.
-5. Pulsa **Deploy**.
-
-La app quedará publicada en la raíz del dominio de producción de Vercel:
+La aplicación está desplegada en:
 
 ```text
-https://TU-PROYECTO.vercel.app/
+https://puki-blue.vercel.app/meet-the-masters/
 ```
 
-Cada push a la rama `main` actualizará el despliegue automáticamente.
+El repositorio está conectado a Vercel y cada push a la rama `main` actualiza el despliegue automáticamente.
 
 ## Uso local
 
