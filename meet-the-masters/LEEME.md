@@ -76,20 +76,27 @@ https://puki-blue.vercel.app/meet-the-masters/?v=2
 │   ├── Logo PUKI.png
 │   ├── Logo PUKI - marca.png
 │   ├── Mascota - Yellow El Leon.png
-│   └── compartir-whatsapp.jpg   → tarjeta 1200 × 630 px
-├── fondos/          → 18 fondos de los personajes
-└── mascota/         → 18 imágenes de Yellow caracterizada
+│   ├── compartir-whatsapp.jpg   → tarjeta 1200 × 630 px
+│   ├── fondos/                  → 18 fondos de los personajes
+│   └── mascota/                 → 18 imágenes de Yellow caracterizada
+├── video/                       → 18 microvideos de Yellow (.mp4)
+└── audio/
+    └── The_Map_to_Tomorrow.mp3  → música de fondo
 ```
 
 ## Editar los datos
 
 La base de datos oficial de alumnos, fechas, personajes, títulos y pistas está al inicio de `js/app.js`, en el arreglo `CAST`. Cada entrada incluye también el nombre exacto de sus archivos de fondo y mascota.
 
-Si se reemplaza una fotografía, conserva el nombre de archivo o actualiza el campo correspondiente en `CAST`.
+Los videos se toman automáticamente de `video/` usando el mismo nombre que la imagen de la mascota, cambiando la extensión a `.mp4`.
+
+Si se reemplaza una fotografía o un video, conserva el nombre de archivo o actualiza el campo correspondiente en `CAST`.
 
 ## Notas técnicas
 
 - Sin dependencias de JavaScript ni frameworks.
 - Tipografías de Google Fonts con respaldo local (`Comic Sans MS` / `Trebuchet MS`) para seguir funcionando sin conexión.
+- Los videos de Yellow se reproducen silenciados, en bucle y con `playsinline`.
+- La música de fondo se puede activar o silenciar con el botón junto al logo. Por las políticas de autoplay de los navegadores, puede requerir el primer toque en la pantalla.
 - Transiciones de fondo, contenido, navegación por teclado, gestos táctiles y enlaces profundos.
-- Todos los recursos visuales del proyecto se guardan localmente.
+- Todos los recursos visuales, de video y audio del proyecto se guardan localmente.

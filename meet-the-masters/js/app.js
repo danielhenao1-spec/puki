@@ -251,8 +251,9 @@
   });
 
   const BASE = {
-    backgrounds: 'fondos/',
-    mascots: 'mascota/',
+    backgrounds: 'imagenes/fondos/',
+    mascots: 'imagenes/mascota/',
+    videos: 'video/',
     logo: 'imagenes/Logo PUKI - marca.png',
     frame: 'imagenes/Crono-Visor.png'
   };
@@ -270,7 +271,9 @@
   const timelineViewport = $('#timelineViewport');
   const infoPanel = $('#infoPanel');
   const mascotPanel = $('#mascotPanel');
-  const mascotBg = $('#mascotBg');
+  const mascotVideo = $('#mascotVideo');
+  const bgAudio = $('#bgAudio');
+  const musicToggle = $('#musicToggle');
   const dateBadge = $('#dateBadge');
   const dateBadgeText = $('.date-badge__text', dateBadge);
   const characterName = $('#characterName');
@@ -326,6 +329,10 @@
 
   function mascotUrl(item) {
     return encodeAsset(`${BASE.mascots}${item.mascot}`);
+  }
+
+  function videoUrl(item) {
+    return encodeAsset(`${BASE.videos}${item.mascot.replace(/\.jpg$/i, '.mp4')}`);
   }
 
   function buildTabs() {
@@ -458,8 +465,15 @@
     infoPanel.dataset.number = pad(currentIndex + 1);
     tripProgressFill.style.width = `${((currentIndex + 1) / CAST.length) * 100}%`;
 
-    mascotBg.src = mascotUrl(item);
-    mascotBg.alt = `Yellow, la mascota del Preescolar Puki, caracterizada como ${item.name}`;
+    const nextVideo = videoUrl(item);
+    mascotVideo.poster = mascotUrl(item);
+    if (mascotVideo.getAttribute('src') !== nextVideo) {
+      mascotVideo.src = nextVideo;
+      mascotVideo.load();
+    }
+    mascotVideo.muted = true;
+    const videoPlayback = mascotVideo.play();
+    if (videoPlayback) videoPlayback.catch(() => {});
 
     document.title = `${item.name} · Crono-Visor | Preescolar Puki`;
 
@@ -669,14 +683,68 @@
   }
 
   function setupImageErrorHandling() {
-    mascotBg.addEventListener('error', () => {
-      showToast(`No encontramos la imagen de Yellow para ${CAST[currentIndex]?.name ?? 'este personaje'}.`);
+    mascotVideo.addEventListener('error', () => {
+      showToast(`No encontramos el video de Yellow para ${CAST[currentIndex]?.name ?? 'este personaje'}.`);
     });
 
     const frame = $('.crono__frame');
     frame?.addEventListener('error', () => {
       showToast('No se pudo cargar el marco del Crono-Visor.');
     });
+  }
+
+  function setupAudio() {
+    if (!bgAudio || !musicToggle) return;
+
+    bgAudio.volume = 0.3;
+
+    const updateMusicButton = () => {
+      const isPlaying = !bgAudio.paused && !bgAudio.muted;
+      musicToggle.classList.toggle('is-muted', !isPlaying);
+      musicToggle.setAttribute('aria-pressed', String(isPlaying));
+      const label = isPlaying ? 'Silenciar música de fondo' : 'Activar música de fondo';
+      musicToggle.setAttribute('aria-label', label);
+      musicToggle.title = label;
+    };
+
+    const playMusic = () => {
+      bgAudio.muted = false;
+      const playback = bgAudio.play();
+      if (playback) {
+        playback.catch(() => {
+          bgAudio.muted = true;
+          updateMusicButton();
+        });
+      }
+    };
+
+    musicToggle.addEventListener('click', () => {
+      if (bgAudio.paused || bgAudio.muted) {
+        playMusic();
+      } else {
+        bgAudio.muted = true;
+        updateMusicButton();
+      }
+    });
+
+    ['playing', 'pause', 'volumechange'].forEach((eventName) => {
+      bgAudio.addEventListener(eventName, updateMusicButton);
+    });
+
+    updateMusicButton();
+    playMusic();
+
+    // Si el navegador bloquea el autoplay, la primera interacción
+    // con la app activa la música; el botón permite silenciarla.
+    const unlockAudio = (event) => {
+      if (event.type === 'pointerdown' && event.target instanceof Element && event.target.closest('#musicToggle')) return;
+      document.removeEventListener('pointerdown', unlockAudio, true);
+      document.removeEventListener('keydown', unlockAudio, true);
+      if (bgAudio.paused || bgAudio.muted) playMusic();
+    };
+
+    document.addEventListener('pointerdown', unlockAudio, true);
+    document.addEventListener('keydown', unlockAudio, true);
   }
 
   function setupEvents() {
@@ -733,6 +801,7 @@
     setupSwipe();
     setupOrientationGuard();
     setupImageErrorHandling();
+    setupAudio();
 
     const startIndex = initialIndex();
     selectTab(startIndex, { instant: true });

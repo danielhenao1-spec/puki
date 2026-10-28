@@ -63,7 +63,7 @@
 
   <!-- Fondo inmersivo de la época -->
   <div class="ambient" id="ambient" aria-hidden="true">
-    <div class="ambient__layer is-active" id="ambientA" style="background-image:url('fondos/San Jose Gregorio Hernandez.jpg')"></div>
+    <div class="ambient__layer is-active" id="ambientA" style="background-image:url('imagenes/fondos/San Jose Gregorio Hernandez.jpg')"></div>
     <div class="ambient__layer" id="ambientB"></div>
     <div class="ambient__wash"></div>
     <div class="ambient__vignette"></div>
@@ -84,6 +84,19 @@
         <header class="screen-head">
           <div class="brand">
             <img class="brand__logo" src="imagenes/Logo PUKI - marca.png" alt="Logo Preescolar Puki">
+            <button class="music-toggle is-muted" id="musicToggle" type="button" aria-label="Activar música de fondo" aria-pressed="false" title="Activar música de fondo">
+              <svg class="music-toggle__icon music-toggle__icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 17V6l9-2v11"></path>
+                <circle cx="6.5" cy="17" r="2.6"></circle>
+                <circle cx="15.5" cy="15" r="2.6"></circle>
+              </svg>
+              <svg class="music-toggle__icon music-toggle__icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 17V6l9-2v11"></path>
+                <circle cx="6.5" cy="17" r="2.6"></circle>
+                <circle cx="15.5" cy="15" r="2.6"></circle>
+                <path d="M3 3l18 18"></path>
+              </svg>
+            </button>
           </div>
 
           <div class="compact-title">
@@ -126,7 +139,7 @@
 
           <section class="stage" aria-label="Personaje seleccionado">
             <figure class="mascot" id="mascotPanel">
-              <img class="mascot__bg" id="mascotBg" src="mascota/Yellow - San Jose Gregorio Hernandez.jpg" alt="" aria-hidden="true">
+              <video class="mascot__bg" id="mascotVideo" src="video/Yellow - San Jose Gregorio Hernandez.mp4" poster="imagenes/mascota/Yellow - San Jose Gregorio Hernandez.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
               <div class="mascot__tint" aria-hidden="true"></div>
               <div class="mascot__sparkles" aria-hidden="true">
                 <i></i><i></i><i></i>
@@ -254,6 +267,8 @@
       </span>
     </div>
   </div>
+
+  <audio id="bgAudio" src="audio/The_Map_to_Tomorrow.mp3" loop preload="auto"></audio>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
