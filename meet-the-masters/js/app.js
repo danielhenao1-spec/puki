@@ -80,9 +80,9 @@
       mascot: 'Yellow - Leonardo da Vinci.jpg'
     },
     {
-      date: 'Feb. 1',
+      date: 'Feb. 1 al 5',
       month: 'FEB',
-      range: '1',
+      range: '1–5',
       name: 'Steve Jobs',
       role: 'El Diseñador de Pantallas Mágicas',
       student: 'Aquiles',
@@ -92,9 +92,9 @@
       mascot: 'Yellow - Steve Jobs.jpg'
     },
     {
-      date: 'Feb. 15',
+      date: 'Feb. 15 al 19',
       month: 'FEB',
-      range: '15',
+      range: '15–19',
       name: 'Yayoi Kusama',
       role: 'La Reina de los Lunares',
       student: 'Galilea',
@@ -104,9 +104,9 @@
       mascot: 'Yellow - Yayoi Kusama.jpg'
     },
     {
-      date: 'Feb. 22',
+      date: 'Feb. 22 al 26',
       month: 'FEB',
-      range: '22',
+      range: '22–26',
       name: 'Louis Braille',
       role: 'El Inventor de los Puntos Secretos',
       student: 'Santiago',
@@ -116,9 +116,9 @@
       mascot: 'Yellow - Louis Braille.jpg'
     },
     {
-      date: 'Mar. 1',
+      date: 'Mar. 1 al 5',
       month: 'MAR',
-      range: '1',
+      range: '1–5',
       name: 'Usain Bolt',
       role: 'El Corredor Rayo',
       student: 'Guillermo',
@@ -128,9 +128,9 @@
       mascot: 'Yellow - Usain Bolt.jpg'
     },
     {
-      date: 'Mar. 8',
+      date: 'Mar. 8 al 12',
       month: 'MAR',
-      range: '8',
+      range: '8–12',
       name: 'Jane Goodall',
       role: 'La Amiga de los Chimpancés',
       student: 'Felipe',
@@ -140,9 +140,9 @@
       mascot: 'Yellow - Jane Goodall.jpg'
     },
     {
-      date: 'Mar. 15',
+      date: 'Mar. 15 al 19',
       month: 'MAR',
-      range: '15',
+      range: '15–19',
       name: 'Ole Kirk Christiansen',
       role: 'El Fabricante de Juguetes',
       student: 'Camila',
@@ -152,9 +152,9 @@
       mascot: 'Yellow - Ole Kirk Christiansen.jpg'
     },
     {
-      date: 'Mar. 29',
+      date: 'Mar. 29 al Abr. 2',
       month: 'MAR',
-      range: '29',
+      range: '29–2',
       name: 'Christina Koch',
       role: 'La Astronauta de las Estrellas',
       student: 'Olivia',
@@ -164,9 +164,9 @@
       mascot: 'Yellow - Christina Koch.jpg'
     },
     {
-      date: 'Abr. 5',
+      date: 'Abr. 5 al 9',
       month: 'ABR',
-      range: '5',
+      range: '5–9',
       name: 'Hans Christian Andersen',
       role: 'El Cuentacuentos',
       student: 'Lucas',
@@ -176,9 +176,9 @@
       mascot: 'Yellow - Hans Christian Andersen.jpg'
     },
     {
-      date: 'Abr. 12',
+      date: 'Abr. 12 al 16',
       month: 'ABR',
-      range: '12',
+      range: '12–16',
       name: 'Albert Einstein',
       role: 'El Científico Divertido',
       student: 'Maximiliano',
@@ -188,9 +188,9 @@
       mascot: 'Yellow - Albert Einstein.jpg'
     },
     {
-      date: 'Abr. 20',
+      date: 'Abr. 20 al 23',
       month: 'ABR',
-      range: '20',
+      range: '20–23',
       name: 'Gandhi',
       role: 'El Héroe de la Paz',
       student: 'Eva',
@@ -200,9 +200,9 @@
       mascot: 'Yellow - Gandhi.jpg'
     },
     {
-      date: 'Abr. 26',
+      date: 'Abr. 26 al 30',
       month: 'ABR',
-      range: '26',
+      range: '26–30',
       name: 'Henry Ford',
       role: 'El Papá de los Autos',
       student: 'Elias',
@@ -212,9 +212,9 @@
       mascot: 'Yellow - Henry Ford.jpg'
     },
     {
-      date: 'May. 3',
+      date: 'May. 3 al 7',
       month: 'MAY',
-      range: '3',
+      range: '3–7',
       name: 'Antonio Gaudí',
       role: 'El Arquitecto Fantástico',
       student: 'Emiliano',
