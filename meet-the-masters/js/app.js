@@ -274,6 +274,8 @@
   const mascotVideo = $('#mascotVideo');
   const bgAudio = $('#bgAudio');
   const musicToggle = $('#musicToggle');
+  const volumeControl = $('.volume-control');
+  const volumeRange = $('#volumeRange');
   const dateBadge = $('#dateBadge');
   const dateBadgeText = $('.date-badge__text', dateBadge);
   const characterName = $('#characterName');
@@ -705,6 +707,13 @@
       const label = isPlaying ? 'Silenciar música de fondo' : 'Activar música de fondo';
       musicToggle.setAttribute('aria-label', label);
       musicToggle.title = label;
+
+      if (volumeRange && volumeControl) {
+        const volumeValue = Math.round(bgAudio.volume * 100);
+        volumeRange.value = String(volumeValue);
+        volumeRange.style.setProperty('--volume-fill', `${volumeValue}%`);
+        volumeControl.classList.toggle('is-muted', bgAudio.muted || volumeValue === 0);
+      }
     };
 
     const playMusic = () => {
@@ -720,12 +729,29 @@
 
     musicToggle.addEventListener('click', () => {
       if (bgAudio.paused || bgAudio.muted) {
+        if (bgAudio.volume === 0) bgAudio.volume = 0.3;
         playMusic();
       } else {
         bgAudio.muted = true;
         updateMusicButton();
       }
     });
+
+    if (volumeRange) {
+      volumeRange.addEventListener('input', () => {
+        const value = Math.max(0, Math.min(100, Number(volumeRange.value) || 0));
+        bgAudio.volume = value / 100;
+
+        if (value === 0) {
+          bgAudio.muted = true;
+          updateMusicButton();
+        } else if (bgAudio.paused || bgAudio.muted) {
+          playMusic();
+        } else {
+          updateMusicButton();
+        }
+      });
+    }
 
     ['playing', 'pause', 'volumechange'].forEach((eventName) => {
       bgAudio.addEventListener(eventName, updateMusicButton);

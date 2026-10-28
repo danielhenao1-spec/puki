@@ -502,6 +502,92 @@ body.is-ready .crono {
   display: block;
 }
 
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: clamp(3px, 0.4cqw, 6px);
+  flex: 0 1 auto;
+  min-width: 0;
+  color: rgba(36, 49, 76, 0.42);
+  transition: color 0.22s ease, opacity 0.22s ease;
+}
+
+.volume-control.is-muted {
+  opacity: 0.62;
+}
+
+.volume-control__icon {
+  width: clamp(13px, 1.3cqw, 18px);
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.volume-range {
+  --volume-fill: 30%;
+  width: clamp(84px, 9.5cqw, 122px);
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-x;
+}
+
+.volume-range:focus-visible {
+  outline: 2px solid var(--royal);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+.volume-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--royal) 0,
+    var(--royal) var(--volume-fill),
+    rgba(36, 49, 76, 0.14) var(--volume-fill),
+    rgba(36, 49, 76, 0.14) 100%
+  );
+}
+
+.volume-range::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--sun);
+  box-shadow: 0 2px 5px rgba(36, 49, 76, 0.22);
+}
+
+.volume-range::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(36, 49, 76, 0.14);
+}
+
+.volume-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--royal);
+}
+
+.volume-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  background: var(--sun);
+  box-shadow: 0 2px 5px rgba(36, 49, 76, 0.22);
+}
+
 .brand__copy {
   display: flex;
   flex-direction: column;
@@ -1871,6 +1957,11 @@ body.is-ready .crono {
     height: clamp(25px, 6.8dvh, 32px);
   }
 
+  .volume-range {
+    width: clamp(64px, 11vw, 84px);
+    height: 30px;
+  }
+
   .brand__name {
     font-size: 12px;
   }
@@ -2100,6 +2191,15 @@ body.is-ready .crono {
   .music-toggle {
     width: 25px;
     height: 25px;
+  }
+
+  .volume-range {
+    width: 64px;
+    height: 24px;
+  }
+
+  .volume-control__icon {
+    width: 11px;
   }
 
   .brand__name {

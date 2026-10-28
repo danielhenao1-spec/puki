@@ -97,6 +97,6 @@ Si se reemplaza una fotografía o un video, conserva el nombre de archivo o actu
 - Sin dependencias de JavaScript ni frameworks.
 - Tipografías de Google Fonts con respaldo local (`Comic Sans MS` / `Trebuchet MS`) para seguir funcionando sin conexión.
 - Los videos de Yellow se reproducen silenciados, en bucle y con `playsinline`.
-- La música de fondo se puede activar o silenciar con el botón junto al logo. Por las políticas de autoplay de los navegadores, puede requerir el primer toque en la pantalla.
+- La música de fondo se puede activar o silenciar con el botón junto al logo y regular con el deslizador de volumen situado a su derecha. Por las políticas de autoplay de los navegadores, puede requerir el primer toque en la pantalla.
 - Transiciones de fondo, contenido, navegación por teclado, gestos táctiles y enlaces profundos.
 - Todos los recursos visuales, de video y audio del proyecto se guardan localmente.
