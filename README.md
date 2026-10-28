@@ -2,13 +2,13 @@
 
 Aplicación web interactiva del **Preescolar Puki** para el proyecto **Meet The Masters**. Presenta a 18 grandes personajes de la historia junto a la mascota Yellow y el alumno o alumna asignado a cada fecha.
 
-![Vista previa para compartir](meet-the-masters/imagenes/compartir-whatsapp.jpg)
+![Vista previa para compartir](meet-the-masters/imagenes/compartir-whatsapp-cuadrada.jpg)
 
 ## Contenido
 
 - [Aplicación web](meet-the-masters/index.html)
 - [Instrucciones, estructura y edición de datos](meet-the-masters/LEEME.md)
-- [Tarjeta para compartir por WhatsApp](meet-the-masters/imagenes/compartir-whatsapp.jpg)
+- [Tarjeta para compartir por WhatsApp](meet-the-masters/imagenes/compartir-whatsapp-cuadrada.jpg)
 
 ## Despliegue en Vercel
 

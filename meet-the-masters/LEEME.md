@@ -44,12 +44,12 @@ El repositorio está conectado a Vercel y cada subida a la rama `main` vuelve a 
 
 ## Vista previa al compartir por WhatsApp
 
-La tarjeta social está creada en `imagenes/compartir-whatsapp.jpg` (1200 × 630 px) e incluye el logo de Puki, el título **PROYECTO: MEET THE MASTERS** y la frase **¡Nuestros niños reciben a los grandes personajes de la historia!**
+La miniatura social está creada en `imagenes/compartir-whatsapp-cuadrada.jpg` (1200 × 1200 px). Es cuadrada para que WhatsApp no recorte al león ni al logo; la imagen contiene solo a Yellow a medio cuerpo sobre un círculo amarillo y el logo de Puki. El título **PROYECTO: MEET THE MASTERS** y la frase **¡Nuestros niños reciben a los grandes personajes de la historia!** los muestra WhatsApp a la derecha de la miniatura mediante las metadatos.
 
 Las etiquetas sociales de `index.html` ya apuntan a la URL pública de producción:
 
 ```html
-<meta property="og:image" content="https://puki-blue.vercel.app/meet-the-masters/imagenes/compartir-whatsapp.jpg">
+<meta property="og:image" content="https://puki-blue.vercel.app/meet-the-masters/imagenes/compartir-whatsapp-cuadrada.jpg">
 ```
 
 Si más adelante se conecta un dominio propio, deben actualizarse `og:url`, `og:image`, `twitter:image` y la etiqueta `canonical`.
@@ -76,7 +76,7 @@ https://puki-blue.vercel.app/meet-the-masters/?v=2
 │   ├── Logo PUKI.png
 │   ├── Logo PUKI - marca.png
 │   ├── Mascota - Yellow El Leon.png
-│   ├── compartir-whatsapp.jpg   → tarjeta 1200 × 630 px
+│   ├── compartir-whatsapp-cuadrada.jpg → miniatura 1200 × 1200 px
 │   ├── fondos/                  → 18 fondos de los personajes
 │   └── mascota/                 → 18 imágenes de Yellow caracterizada
 ├── video/                       → 18 microvideos de Yellow (.mp4)
