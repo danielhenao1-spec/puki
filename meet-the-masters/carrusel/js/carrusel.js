@@ -38,8 +38,8 @@
      añadir más pistas sin tocar la lógica del carrusel. */
   const CHARACTER_AUDIO = {
     'wolfgang-mozart': {
-      src: 'audio/mozart-medley.mp3',
-      title: 'Medley de Mozart'
+      src: '../audio/mix-wolfgang-mozart.mp3',
+      title: 'Mix de Wolfgang Mozart'
     }
   };
 

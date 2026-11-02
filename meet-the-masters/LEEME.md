@@ -26,7 +26,7 @@ La experiencia está diseñada **exclusivamente para orientación horizontal**. 
 
 ## Versión carrusel
 
-La carpeta `carrusel/` contiene una versión simplificada de esta experiencia: solo los avatares en video y los fondos de los 18 personajes, con flechas laterales para pasar de uno a otro y el nombre del personaje sobre el avatar. Incluye un medley instrumental de Mozart con control de volumen en su tarjeta, y no incluye línea del tiempo ni fichas de alumnos. Se abre en `carrusel/index.html` y reutiliza las mismas carpetas de imágenes y videos del proyecto.
+La carpeta `carrusel/` contiene una versión simplificada de esta experiencia: solo los avatares en video y los fondos de los 18 personajes, con flechas laterales para pasar de uno a otro y el nombre del personaje sobre el avatar. Incluye música de Mozart con control de volumen en su tarjeta, y no incluye línea del tiempo ni fichas de alumnos. Se abre en `carrusel/index.html` y reutiliza las mismas carpetas de imágenes y videos del proyecto.
 
 ## Interacción
 

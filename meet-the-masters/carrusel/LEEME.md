@@ -1,6 +1,6 @@
 # Carrusel · Meet The Masters
 
-Versión simplificada del **Crono-Visor**: solo los avatares en video de Yellow y los fondos de cada personaje, con flechas laterales para pasar de uno a otro. Incluye un medley de Mozart con control de volumen, y no incluye línea del tiempo ni fichas de alumnos.
+Versión simplificada del **Crono-Visor**: solo los avatares en video de Yellow y los fondos de cada personaje, con flechas laterales para pasar de uno a otro. Incluye música de Mozart con control de volumen, y no incluye línea del tiempo ni fichas de alumnos.
 
 ## Cómo abrirla
 
@@ -34,27 +34,22 @@ Los recursos se toman de las carpetas existentes del proyecto (`../imagenes/` y 
 carrusel/
 ├── index.html
 ├── LEEME.md
-├── audio/
-│   └── mozart-medley.mp3       → 3:14, sintetizado (160 kbps)
 ├── css/
 │   └── carrusel.css
 └── js/
     └── carrusel.js
 ```
 
+La pista de Mozart se guarda en la carpeta compartida del proyecto:
+
+```
+audio/
+└── mix-wolfgang-mozart.mp3      → 2:40, 192 kbps, 48 kHz
+```
+
 ## Música
 
-El medley es una **grabación instrumental sintetizada y original** creada para este proyecto a partir de temas de dominio público de Mozart. No usa grabaciones de terceros ni extractos comerciales.
-
-Orden de los temas, pensado para que los niños reconozcan algo desde el principio:
-
-1. *Ah, vous dirai-je, Maman* (la melodía de “Estrellita” / “Twinkle”)
-2. *Eine kleine Nachtmusik*
-3. *Marcha turca* (Sonata K.331)
-4. Sinfonía n.º 40
-5. Sonata K.545
-
-El archivo está en `audio/mozart-medley.mp3` (unos 3,9 MB, 160 kbps). El audio solo existe en la tarjeta de Mozart; el video de Yellow sigue siempre en silencio.
+La pista actual es `../audio/mix-wolfgang-mozart.mp3` (2:40, 192 kbps). Se reproduce únicamente en la tarjeta de Mozart; el video de Yellow sigue siempre en silencio.
 
 ### Control de volumen
 
@@ -74,8 +69,8 @@ El objeto `CHARACTER_AUDIO` del mismo archivo asigna una pista a cada personaje.
 ```js
 const CHARACTER_AUDIO = {
   'wolfgang-mozart': {
-    src: 'audio/mozart-medley.mp3',
-    title: 'Medley de Mozart'
+    src: '../audio/mix-wolfgang-mozart.mp3',
+    title: 'Mix de Wolfgang Mozart'
   }
 };
 ```
