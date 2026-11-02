@@ -1,7 +1,7 @@
 /* ============================================================
    CARRUSEL · MEET THE MASTERS
    Preescolar Puki · Versión simplificada
-   Solo avatares (video) + fondos + nombre del personaje.
+   Avatares (video) + fondos + nombre del personaje + audio opcional.
    ============================================================ */
 
 (() => {
@@ -34,6 +34,18 @@
     videos: '../video/'
   };
 
+  /* Audio por personaje. De momento solo Mozart; la estructura permite
+     añadir más pistas sin tocar la lógica del carrusel. */
+  const CHARACTER_AUDIO = {
+    'wolfgang-mozart': {
+      src: 'audio/mozart-medley.mp3',
+      title: 'Medley de Mozart'
+    }
+  };
+
+  const AUDIO_VOLUME_KEY = 'puki-carrusel-volume';
+  const DEFAULT_AUDIO_VOLUME = 0.55;
+
   const $ = (selector, scope = document) => scope.querySelector(selector);
 
   const body = document.body;
@@ -51,6 +63,10 @@
   const prevBtn = $('#prevBtn');
   const nextBtn = $('#nextBtn');
   const toast = $('#toast');
+  const characterAudio = $('#characterAudio');
+  const audioControl = $('#audioControl');
+  const audioPlay = $('#audioPlay');
+  const audioVolume = $('#audioVolume');
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -61,6 +77,13 @@
   let toastTimer = 0;
   let pointerStart = null;
   let announcementNode = null;
+
+  let activeAudioTrack = null;
+  let activeAudioSlug = null;
+  let audioBaseVolume = DEFAULT_AUDIO_VOLUME;
+  let audioFadeFrame = 0;
+  let audioToken = 0;
+  let audioWasPlaying = false;
 
   const pad = (value) => String(value).padStart(2, '0');
 
@@ -174,6 +197,236 @@
     announcementNode.textContent = `Ahora: ${item.name}. ${item.role}. Personaje ${currentIndex + 1} de ${CAST.length}.`;
   }
 
+  /* ---------- Música del personaje ---------- */
+
+  function loadStoredVolume() {
+    try {
+      const raw = window.localStorage.getItem(AUDIO_VOLUME_KEY);
+      if (raw !== null) {
+        const value = Number(raw);
+        if (Number.isFinite(value) && value >= 0 && value <= 1) return value;
+      }
+    } catch {
+      // file:// o navegación privada pueden bloquear localStorage.
+    }
+    return DEFAULT_AUDIO_VOLUME;
+  }
+
+  function saveStoredVolume() {
+    try {
+      window.localStorage.setItem(AUDIO_VOLUME_KEY, String(audioBaseVolume));
+    } catch {
+      // Sin persistencia: el volumen sigue funcionando en esta sesión.
+    }
+  }
+
+  function syncVolumeUI() {
+    const percent = Math.round(audioBaseVolume * 100);
+    audioVolume.value = String(percent);
+    audioVolume.style.setProperty('--volume-fill', `${percent}%`);
+    audioControl.classList.toggle('is-silent', percent === 0);
+  }
+
+  function cancelAudioFade() {
+    if (audioFadeFrame) {
+      window.cancelAnimationFrame(audioFadeFrame);
+      audioFadeFrame = 0;
+    }
+  }
+
+  function fadeAudioTo(target, duration, token) {
+    cancelAudioFade();
+
+    if (duration <= 0 || reducedMotion.matches) {
+      characterAudio.volume = target;
+      return;
+    }
+
+    const from = characterAudio.volume;
+    const start = window.performance.now();
+
+    const step = (now) => {
+      if (token !== audioToken) return;
+      const progress = Math.min(1, (now - start) / duration);
+      characterAudio.volume = Math.max(0, Math.min(1, from + (target - from) * progress));
+      if (progress < 1) {
+        audioFadeFrame = window.requestAnimationFrame(step);
+      } else {
+        audioFadeFrame = 0;
+      }
+    };
+
+    audioFadeFrame = window.requestAnimationFrame(step);
+  }
+
+  function setAudioPlayingUI(playing) {
+    audioControl.classList.toggle('is-playing', playing);
+    audioPlay.hidden = !activeAudioTrack || playing;
+  }
+
+  function resetAudioTime() {
+    try {
+      characterAudio.currentTime = 0;
+    } catch {
+      // El navegador aún no tiene metadatos; play() arrancará desde el inicio.
+    }
+  }
+
+  function startCharacterAudio() {
+    if (!activeAudioTrack) return;
+
+    const token = ++audioToken;
+    cancelAudioFade();
+    characterAudio.volume = 0;
+
+    const started = () => {
+      if (token !== audioToken) return;
+      setAudioPlayingUI(true);
+      if (audioBaseVolume > 0) {
+        fadeAudioTo(audioBaseVolume, 600, token);
+      } else {
+        characterAudio.volume = 0;
+      }
+    };
+
+    const blocked = () => {
+      if (token !== audioToken) return;
+      characterAudio.volume = audioBaseVolume;
+      setAudioPlayingUI(false);
+    };
+
+    let playback;
+    try {
+      playback = characterAudio.play();
+    } catch {
+      blocked();
+      return;
+    }
+
+    if (playback && typeof playback.then === 'function') {
+      playback.then(started, blocked);
+    } else {
+      started();
+    }
+  }
+
+  function stopCharacterAudio({ reset = true } = {}) {
+    audioToken++;
+    cancelAudioFade();
+
+    if (characterAudio.paused) {
+      characterAudio.volume = audioBaseVolume;
+      if (reset) resetAudioTime();
+      setAudioPlayingUI(false);
+      return;
+    }
+
+    const token = audioToken;
+    fadeAudioTo(0, 350, token);
+
+    window.setTimeout(() => {
+      if (token !== audioToken) return;
+      characterAudio.pause();
+      characterAudio.volume = audioBaseVolume;
+      if (reset) resetAudioTime();
+      setAudioPlayingUI(false);
+    }, 380);
+  }
+
+  function updateCharacterAudio(item) {
+    const track = CHARACTER_AUDIO[item.slug] || null;
+
+    if (!track) {
+      if (activeAudioTrack || activeAudioSlug) {
+        stopCharacterAudio();
+        activeAudioTrack = null;
+        activeAudioSlug = null;
+        audioControl.hidden = true;
+        audioControl.classList.remove('is-playing');
+        audioPlay.hidden = true;
+      }
+      return;
+    }
+
+    const isNew = activeAudioSlug !== item.slug;
+    activeAudioTrack = track;
+    activeAudioSlug = item.slug;
+
+    audioControl.hidden = false;
+    audioControl.title = track.title;
+    audioControl.setAttribute('aria-label', `Música de ${item.name}`);
+    audioVolume.setAttribute('aria-label', `Volumen de la música de ${item.name}`);
+    audioPlay.setAttribute('aria-label', `Reproducir música de ${item.name}`);
+    syncVolumeUI();
+
+    if (isNew) {
+      audioToken++;
+      cancelAudioFade();
+      characterAudio.pause();
+      characterAudio.volume = audioBaseVolume;
+
+      if (characterAudio.getAttribute('src') !== track.src) {
+        characterAudio.src = track.src;
+        characterAudio.load();
+      }
+
+      resetAudioTime();
+      audioPlay.hidden = true;
+      startCharacterAudio();
+    } else if (characterAudio.paused) {
+      if (characterAudio.ended) resetAudioTime();
+      audioPlay.hidden = true;
+      startCharacterAudio();
+    }
+  }
+
+  function setupCharacterAudio() {
+    audioBaseVolume = loadStoredVolume();
+    syncVolumeUI();
+
+    audioVolume.addEventListener('input', () => {
+      const percent = Math.max(0, Math.min(100, Number(audioVolume.value) || 0));
+      audioBaseVolume = percent / 100;
+      saveStoredVolume();
+      cancelAudioFade();
+      if (activeAudioTrack) characterAudio.volume = audioBaseVolume;
+      syncVolumeUI();
+
+      if (activeAudioTrack && characterAudio.paused && audioBaseVolume > 0) {
+        startCharacterAudio();
+      }
+    });
+
+    audioPlay.addEventListener('click', () => {
+      if (!activeAudioTrack) return;
+      if (characterAudio.ended) resetAudioTime();
+      startCharacterAudio();
+    });
+
+    characterAudio.addEventListener('play', () => setAudioPlayingUI(true));
+    characterAudio.addEventListener('pause', () => setAudioPlayingUI(false));
+
+    characterAudio.addEventListener('ended', () => {
+      resetAudioTime();
+      setAudioPlayingUI(false);
+    });
+
+    characterAudio.addEventListener('error', () => {
+      if (!activeAudioTrack) return;
+      setAudioPlayingUI(false);
+      showToast(`No se pudo cargar la música de ${CAST[currentIndex]?.name ?? 'este personaje'}.`);
+    });
+
+    const unlockAudio = (event) => {
+      if (!activeAudioTrack || !characterAudio.paused) return;
+      if (event.target instanceof Element && event.target.closest('#audioPlay')) return;
+      startCharacterAudio();
+    };
+
+    document.addEventListener('pointerdown', unlockAudio, true);
+    document.addEventListener('keydown', unlockAudio, true);
+  }
+
   /* ---------- Selección ---------- */
 
   function selectCard(index, options = {}) {
@@ -189,6 +442,7 @@
     crossfadeBackground(item, isInitial || options.instant);
     updateUrl(item);
     announce(item);
+    updateCharacterAudio(item);
 
     if (!isInitial) preloadNeighbours(normalized);
   }
@@ -264,7 +518,7 @@
   function setupSwipe() {
     stage.addEventListener('pointerdown', (event) => {
       if (!event.isPrimary || event.button !== 0) return;
-      if (event.target.closest('button, a')) return;
+      if (event.target.closest('button, a, input, [role="slider"]')) return;
       pointerStart = { x: event.clientX, y: event.clientY };
     });
 
@@ -317,9 +571,18 @@
       if (document.hidden) {
         pointerStart = null;
         video.pause();
+        if (!characterAudio.paused) {
+          audioWasPlaying = true;
+          characterAudio.pause();
+        }
       } else if (currentIndex >= 0) {
         const playback = video.play();
         if (playback) playback.catch(() => {});
+
+        if (activeAudioTrack && audioWasPlaying) {
+          audioWasPlaying = false;
+          startCharacterAudio();
+        }
       }
     });
 
@@ -341,6 +604,7 @@
     addScreenReaderAnnouncer();
     setupEvents();
     setupSwipe();
+    setupCharacterAudio();
 
     const startIndex = initialIndex();
     selectCard(startIndex, { instant: true });

@@ -81,6 +81,22 @@
           disablepictureinpicture aria-hidden="true"></video>
         <div class="card__tint" aria-hidden="true"></div>
 
+        <div class="audio-control" id="audioControl" role="group" aria-label="Música del personaje" hidden>
+          <button class="audio-control__play" id="audioPlay" type="button" aria-label="Reproducir música" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8.5 5.3v13.4L19 12z"></path>
+            </svg>
+          </button>
+          <span class="audio-control__speaker" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 9.4h3.4L12 5.4v13.2L7.4 14.6H4z"></path>
+              <path class="audio-control__wave audio-control__wave--1" d="M15.3 9.2a4 4 0 0 1 0 5.6"></path>
+              <path class="audio-control__wave audio-control__wave--2" d="M17.9 6.8a7.6 7.6 0 0 1 0 10.4"></path>
+            </svg>
+          </span>
+          <input class="audio-control__range" id="audioVolume" type="range" min="0" max="100" step="1" value="55" aria-label="Volumen de la música del personaje">
+        </div>
+
         <figcaption class="card__caption">
           <span class="card__kicker">Personaje invitado</span>
           <h1 class="card__name" id="characterName">San José Gregorio Hernández</h1>
@@ -106,6 +122,8 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <audio id="characterAudio" preload="none"></audio>
 
   <script src="js/carrusel.js" defer></script>
 </body>
