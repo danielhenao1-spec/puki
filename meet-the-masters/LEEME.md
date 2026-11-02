@@ -24,6 +24,10 @@ La experiencia está diseñada **exclusivamente para orientación horizontal**. 
 - Escritorio y tablet grande: marco 3D original con la interfaz dentro de su ventana.
 - Ventanas estrechas o celulares en horizontal: modo compacto a pantalla completa, conservando la identidad visual del Crono-Visor.
 
+## Versión carrusel
+
+La carpeta `carrusel/` contiene una versión simplificada de esta experiencia: solo los avatares en video y los fondos de los 18 personajes, con flechas laterales para pasar de uno a otro y el nombre del personaje sobre el avatar. No incluye sonido, línea del tiempo ni fichas de alumnos. Se abre en `carrusel/index.html` y reutiliza las mismas carpetas de imágenes y videos del proyecto.
+
 ## Interacción
 
 - Haz clic o toca cualquier fecha de la **Línea del tiempo** para viajar al personaje.
@@ -67,6 +71,11 @@ https://puki-blue.vercel.app/meet-the-masters/?v=2
 ├── index.html
 ├── Logo PUKI.png
 ├── LEEME.md
+├── carrusel/                    → versión simplificada (solo avatares y fondos)
+│   ├── index.html
+│   ├── LEEME.md
+│   ├── css/carrusel.css
+│   └── js/carrusel.js
 ├── css/
 │   └── estilos.css
 ├── js/

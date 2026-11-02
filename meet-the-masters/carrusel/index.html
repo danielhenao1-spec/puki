@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#172033">
+  <meta name="description" content="Carrusel de personajes · Meet The Masters · Preescolar Puki.">
+  <title>Carrusel · Meet The Masters</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Averia+Libre:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+  </noscript>
+
+  <link rel="icon" href="../imagenes/Logo PUKI - marca.png" type="image/png">
+  <link rel="preload" as="image" href="../imagenes/Logo PUKI - marca.png">
+  <link rel="preload" as="image" href="../imagenes/fondos/San Jose Gregorio Hernandez.jpg">
+  <link rel="preload" as="image" href="../imagenes/mascota/Yellow - San Jose Gregorio Hernandez.jpg">
+  <link rel="stylesheet" href="css/carrusel.css">
+</head>
+<body>
+  <!-- Pantalla de arranque -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot__inner">
+      <img class="boot__logo" src="../imagenes/Logo PUKI - marca.png" alt="Preescolar Puki">
+      <div class="boot__machine" aria-hidden="true">
+        <span class="boot__ring"></span>
+        <span class="boot__ring"></span>
+        <span class="boot__core"></span>
+      </div>
+      <p class="boot__label">Preparando el carrusel</p>
+      <div class="boot__track"><span></span></div>
+    </div>
+  </div>
+
+  <!-- Fondo inmersivo del personaje -->
+  <div class="ambient" id="ambient" aria-hidden="true">
+    <div class="ambient__layer is-active" id="ambientA" style="background-image:url('../imagenes/fondos/San Jose Gregorio Hernandez.jpg')"></div>
+    <div class="ambient__layer" id="ambientB"></div>
+    <div class="ambient__wash"></div>
+    <div class="ambient__vignette"></div>
+    <div class="ambient__glow"></div>
+    <div class="ambient__sparkles">
+      <i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+
+  <main class="app" id="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Volver al Crono-Visor de Meet The Masters">
+        <span class="brand__chip">
+          <img class="brand__logo" src="../imagenes/Logo PUKI - marca.png" alt="Preescolar Puki">
+        </span>
+        <span class="brand__copy">
+          <span class="brand__kicker">Proyecto</span>
+          <strong class="brand__name">Meet The Masters</strong>
+        </span>
+      </a>
+
+      <div class="topbar__tools">
+        <span class="key-hint" aria-hidden="true">Desliza o usa las flechas</span>
+        <span class="index-pill" aria-label="Personaje actual">
+          <strong class="index-pill__current" id="headIndex">01</strong>
+          <span class="index-pill__sep" aria-hidden="true">/</span>
+          <span class="index-pill__total" id="headTotal">18</span>
+        </span>
+      </div>
+    </header>
+
+    <section class="stage" id="stage" aria-roledescription="carrusel" aria-label="Galería de personajes">
+      <figure class="card" id="card">
+        <video
+          class="card__video"
+          id="mascotVideo"
+          src="../video/Yellow - San Jose Gregorio Hernandez.mp4"
+          poster="../imagenes/mascota/Yellow - San Jose Gregorio Hernandez.jpg"
+          autoplay muted loop playsinline preload="auto"
+          disablepictureinpicture aria-hidden="true"></video>
+        <div class="card__tint" aria-hidden="true"></div>
+
+        <figcaption class="card__caption">
+          <span class="card__kicker">Personaje invitado</span>
+          <h1 class="card__name" id="characterName">San José Gregorio Hernández</h1>
+          <p class="card__role" id="characterRole">El Doctor Amigo</p>
+        </figcaption>
+      </figure>
+
+      <button class="nav-arrow nav-arrow--prev" id="prevBtn" type="button" aria-label="Ver personaje anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7"></path>
+        </svg>
+      </button>
+      <button class="nav-arrow nav-arrow--next" id="nextBtn" type="button" aria-label="Ver personaje siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </section>
+  </main>
+
+  <div class="progress" aria-hidden="true">
+    <span class="progress__fill" id="progressFill"></span>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/carrusel.js" defer></script>
+</body>
+</html>
