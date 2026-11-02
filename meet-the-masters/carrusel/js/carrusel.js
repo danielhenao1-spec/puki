@@ -85,6 +85,13 @@
   let audioToken = 0;
   let audioWasPlaying = false;
 
+  // En iPhone/iPad el volumen del elemento de audio es de solo lectura.
+  // Ahí usamos un GainNode de Web Audio para que el control sea real.
+  const needsWebAudioVolume =
+    /iP(hone|ad|od)/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  let audioGraph = null;
+
   const pad = (value) => String(value).padStart(2, '0');
 
   function slugFromLocation() {
@@ -227,6 +234,42 @@
     audioControl.classList.toggle('is-silent', percent === 0);
   }
 
+  function ensureAudioGraph() {
+    if (audioGraph) return audioGraph;
+    if (!needsWebAudioVolume) return null;
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+
+    try {
+      const context = new AudioContextClass();
+      const source = context.createMediaElementSource(characterAudio);
+      const gain = context.createGain();
+      gain.gain.value = 0;
+      source.connect(gain);
+      gain.connect(context.destination);
+      characterAudio.volume = 1;
+      audioGraph = { context, gain };
+      return audioGraph;
+    } catch {
+      audioGraph = null;
+      return null;
+    }
+  }
+
+  function setAudioLevel(value) {
+    const level = Math.max(0, Math.min(1, value));
+    if (audioGraph) {
+      audioGraph.gain.gain.value = level;
+    } else {
+      characterAudio.volume = level;
+    }
+  }
+
+  function getAudioLevel() {
+    return audioGraph ? audioGraph.gain.gain.value : characterAudio.volume;
+  }
+
   function cancelAudioFade() {
     if (audioFadeFrame) {
       window.cancelAnimationFrame(audioFadeFrame);
@@ -238,17 +281,17 @@
     cancelAudioFade();
 
     if (duration <= 0 || reducedMotion.matches) {
-      characterAudio.volume = target;
+      setAudioLevel(target);
       return;
     }
 
-    const from = characterAudio.volume;
+    const from = getAudioLevel();
     const start = window.performance.now();
 
     const step = (now) => {
       if (token !== audioToken) return;
       const progress = Math.min(1, (now - start) / duration);
-      characterAudio.volume = Math.max(0, Math.min(1, from + (target - from) * progress));
+      setAudioLevel(from + (target - from) * progress);
       if (progress < 1) {
         audioFadeFrame = window.requestAnimationFrame(step);
       } else {
@@ -277,7 +320,18 @@
 
     const token = ++audioToken;
     cancelAudioFade();
-    characterAudio.volume = 0;
+
+    const activationActive = !navigator.userActivation || navigator.userActivation.isActive;
+    if (needsWebAudioVolume && activationActive) {
+      ensureAudioGraph();
+    }
+
+    if (audioGraph && audioGraph.context.state === 'suspended') {
+      const resumed = audioGraph.context.resume();
+      if (resumed) resumed.catch(() => {});
+    }
+
+    setAudioLevel(0);
 
     const started = () => {
       if (token !== audioToken) return;
@@ -285,13 +339,13 @@
       if (audioBaseVolume > 0) {
         fadeAudioTo(audioBaseVolume, 600, token);
       } else {
-        characterAudio.volume = 0;
+        setAudioLevel(0);
       }
     };
 
     const blocked = () => {
       if (token !== audioToken) return;
-      characterAudio.volume = audioBaseVolume;
+      setAudioLevel(audioBaseVolume);
       setAudioPlayingUI(false);
     };
 
@@ -315,7 +369,7 @@
     cancelAudioFade();
 
     if (characterAudio.paused) {
-      characterAudio.volume = audioBaseVolume;
+      setAudioLevel(audioBaseVolume);
       if (reset) resetAudioTime();
       setAudioPlayingUI(false);
       return;
@@ -327,7 +381,7 @@
     window.setTimeout(() => {
       if (token !== audioToken) return;
       characterAudio.pause();
-      characterAudio.volume = audioBaseVolume;
+      setAudioLevel(audioBaseVolume);
       if (reset) resetAudioTime();
       setAudioPlayingUI(false);
     }, 380);
@@ -363,7 +417,7 @@
       audioToken++;
       cancelAudioFade();
       characterAudio.pause();
-      characterAudio.volume = audioBaseVolume;
+      setAudioLevel(audioBaseVolume);
 
       if (characterAudio.getAttribute('src') !== track.src) {
         characterAudio.src = track.src;
@@ -383,13 +437,14 @@
   function setupCharacterAudio() {
     audioBaseVolume = loadStoredVolume();
     syncVolumeUI();
+    setAudioLevel(audioBaseVolume);
 
     audioVolume.addEventListener('input', () => {
       const percent = Math.max(0, Math.min(100, Number(audioVolume.value) || 0));
       audioBaseVolume = percent / 100;
       saveStoredVolume();
       cancelAudioFade();
-      if (activeAudioTrack) characterAudio.volume = audioBaseVolume;
+      if (activeAudioTrack) setAudioLevel(audioBaseVolume);
       syncVolumeUI();
 
       if (activeAudioTrack && characterAudio.paused && audioBaseVolume > 0) {
