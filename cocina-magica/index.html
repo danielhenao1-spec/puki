@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#F5B324">
+  <meta name="description" content="La Cocina Mágica de Yellow: explora los grupos alimenticios y cocina recetas saludables en el Plato Mágico, un juego educativo de preescolar.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Cocina de Yellow">
+  <title>La Cocina Mágica de Yellow</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/baloo2-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/images/cocina-fondo.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="ambient" aria-hidden="true"></div>
+
+    <main class="stage" id="stage" data-view="kitchen" aria-label="La Cocina Mágica de Yellow">
+      <!-- Fondo, personaje detrás de la puerta y escena de preparación -->
+      <div class="world">
+        <div class="door-tv" id="doorTv" aria-hidden="true">
+          <video class="door-tv__video is-active" id="yellowVideoA" muted playsinline preload="auto" poster="assets/images/door-poster.webp"></video>
+          <video class="door-tv__video" id="yellowVideoB" muted playsinline preload="auto"></video>
+          <div class="door-tv__vignette"></div>
+        </div>
+
+        <section class="kitchen-scene" id="kitchenScene" aria-label="Cocina de Yellow">
+          <img class="scene-image kitchen-scene__image" src="assets/images/cocina-fondo.webp" alt="" width="2752" height="1536" draggable="false">
+
+          <div class="hotspot-layer" aria-label="Grupos alimenticios de la cocina">
+            <button class="interactive-hotspot hotspot hotspot--proteinas" type="button" data-info-group="proteinas" aria-label="Aprender sobre las proteínas">
+              <span class="hotspot__badge hotspot__badge--proteinas">
+                <span class="hotspot__emoji" aria-hidden="true">🍗</span>
+                <span>Proteínas</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--lacteos" type="button" data-info-group="lacteos" aria-label="Aprender sobre los lácteos">
+              <span class="hotspot__badge hotspot__badge--lacteos">
+                <span class="hotspot__emoji" aria-hidden="true">🥛</span>
+                <span>Lácteos</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--carbohidratos" type="button" data-info-group="carbohidratos" aria-label="Aprender sobre carbohidratos">
+              <span class="hotspot__badge hotspot__badge--carbohidratos">
+                <span class="hotspot__emoji" aria-hidden="true">🌾</span>
+                <span>Carbohidratos</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--pan" type="button" data-info-group="carbohidratos" aria-label="Aprender sobre los carbohidratos">
+              <span class="hotspot__badge hotspot__badge--carbohidratos">
+                <span class="hotspot__emoji" aria-hidden="true">🌾</span>
+                <span>Carbohidratos</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--frutas" type="button" data-info-group="frutas" aria-label="Aprender sobre las frutas">
+              <span class="hotspot__badge hotspot__badge--frutas">
+                <span class="hotspot__emoji" aria-hidden="true">🍎</span>
+                <span>Frutas</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--vegetales" type="button" data-info-group="vegetales" aria-label="Aprender sobre los vegetales">
+              <span class="hotspot__badge hotspot__badge--vegetales">
+                <span class="hotspot__emoji" aria-hidden="true">🥦</span>
+                <span>Vegetales</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--grasas" type="button" data-info-group="grasas" aria-label="Aprender sobre las grasas saludables">
+              <span class="hotspot__badge hotspot__badge--grasas hotspot__badge--oil">
+                <span class="hotspot__emoji" aria-hidden="true">💧</span>
+                <span>Grasas Saludables</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--vegetales-frio" type="button" data-info-group="vegetales" aria-label="Aprender sobre los vegetales">
+              <span class="hotspot__badge hotspot__badge--vegetales hotspot__badge--cold-veg">
+                <span class="hotspot__emoji" aria-hidden="true">🥦</span>
+                <span>Vegetales</span>
+                <span class="hotspot__info-mark" aria-hidden="true">i</span>
+              </span>
+            </button>
+
+            <button class="interactive-hotspot hotspot hotspot--plate" type="button" data-action="enter-prep" aria-label="Entrar al Plato Mágico y preparar una receta">
+              <span class="hotspot__badge hotspot__badge--cta"><span class="hotspot__emoji" aria-hidden="true">🍽️</span><span>¡A cocinar!</span><span class="hotspot__pulse" aria-hidden="true">✨</span></span>
+            </button>
+          </div>
+        </section>
+
+        <section class="prep-scene" id="prepScene" aria-label="Plato mágico vacío">
+          <img class="scene-image prep-scene__empty" src="assets/images/plato-vacio.webp" alt="" width="1376" height="768" draggable="false">
+          <img class="scene-image prep-scene__dish" id="readyDish" alt="" width="1376" height="768" draggable="false">
+          <div class="prep-scene__glow" aria-hidden="true"></div>
+        </section>
+      </div>
+
+      <!-- Interfaz sobre la escena -->
+      <div class="ui">
+        <header class="topbar">
+          <div class="brand" aria-label="La Cocina Mágica de Yellow">
+            <img class="brand__mascot" src="assets/images/yellow-chef.webp" alt="" width="640" height="640" draggable="false">
+            <div class="brand__copy">
+              <span class="brand__kicker">La cocina mágica de</span>
+              <span class="brand__title">Yellow <span class="brand__star" aria-hidden="true">★</span></span>
+            </div>
+          </div>
+
+          <div class="top-actions">
+            <button class="tool-button" id="soundButton" type="button" data-action="toggle-sound" aria-pressed="true" aria-label="Silenciar sonidos">
+              <svg class="icon icon--sound" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 9.2h3.4L12 5.1v13.8l-4.6-4.1H4V9.2Z"/>
+                <path class="sound-wave" d="M15.2 8.4a5 5 0 0 1 0 7.2M18 5.7a8.8 8.8 0 0 1 0 12.6"/>
+                <path class="sound-mute" d="m15.4 9.3 5.1 5.4M20.5 9.3l-5.1 5.4"/>
+              </svg>
+              <span>Sonido</span>
+            </button>
+            <button class="tool-button" type="button" data-action="fullscreen" aria-label="Ver a pantalla completa">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 4H4v4.5M15.5 4H20v4.5M20 15.5V20h-4.5M4 15.5V20h4.5"/></svg>
+              <span>Pantalla</span>
+            </button>
+            <button class="tool-button" type="button" data-action="open-help" aria-label="Cómo jugar">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.2a2.4 2.4 0 0 1 4.7.6c0 1.7-2.4 1.9-2.4 3.7M12 16.9h.01"/></svg>
+              <span>Ayuda</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="learn-banner" id="learnBanner">
+          <span class="learn-banner__book" aria-hidden="true">📖</span>
+          <span class="learn-banner__copy">
+            <strong>Modo exploración</strong>
+            <small>Descubre los 6 grupos alimenticios</small>
+          </span>
+        </div>
+
+        <section class="slotbar" aria-label="Mi plato">
+          <div class="slotbar__topline">
+            <span class="slotbar__title">Mi plato mágico <span aria-hidden="true">✨</span></span>
+            <span class="slotbar__progress" id="slotProgress">0 de 3</span>
+          </div>
+          <div class="ingredient-slot-bar" id="slotBar" role="list" aria-live="polite">
+            <div class="slot-empty" id="slotEmpty">
+              <span class="slot-empty__spark" aria-hidden="true">＋</span>
+              <span>Toca un grupo para elegir ingredientes</span>
+            </div>
+          </div>
+        </section>
+
+        <button class="back-button" type="button" data-action="back-to-kitchen" aria-label="Volver a la cocina">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7M8 12h11"/></svg>
+          <span>Volver a la cocina</span>
+        </button>
+
+        <aside class="recipe-card recipe-carousel" id="recipeCard" aria-label="Carrusel de recetas">
+          <div class="recipe-card__head">
+            <button class="carousel-nav" type="button" data-action="prev-recipe" aria-label="Ver la receta anterior">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>
+            </button>
+            <span class="recipe-card__kicker">Elige tu receta <span class="carousel-count" id="recipeCount">1 de 3</span></span>
+            <button class="carousel-nav" type="button" data-action="next-recipe" aria-label="Ver la siguiente receta">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="recipe-card__body">
+            <div class="recipe-card__thumb">
+              <img id="recipeThumb" src="assets/images/plato-arepa.webp" alt="" width="1376" height="768" draggable="false">
+            </div>
+            <div class="recipe-card__copy">
+              <h2 id="recipeTitle" tabindex="-1">Desayuno Campeón</h2>
+              <p id="recipeSubtitle">Arepa, huevo y aguacate</p>
+            </div>
+          </div>
+          <div class="recipe-steps" id="recipeSteps" aria-label="Ingredientes que necesitas"></div>
+          <div class="carousel-dots" id="recipeDots" aria-label="Elegir receta"></div>
+        </aside>
+
+        <nav class="prep-dock" id="prepDock" aria-label="Grupos alimenticios para cocinar">
+          <span class="prep-dock__label">Añade ingredientes por grupo</span>
+          <div class="prep-dock__row">
+            <button class="dock-button dock-button--proteinas" type="button" data-picker-group="proteinas" aria-label="Elegir proteínas">
+              <span class="dock-button__emoji" aria-hidden="true">🍗</span>
+              <span class="dock-button__copy"><strong>Proteínas</strong><small>Músculos</small></span>
+            </button>
+            <button class="dock-button dock-button--lacteos" type="button" data-picker-group="lacteos" aria-label="Elegir lácteos">
+              <span class="dock-button__emoji" aria-hidden="true">🥛</span>
+              <span class="dock-button__copy"><strong>Lácteos</strong><small>Calcio</small></span>
+            </button>
+            <button class="dock-button dock-button--carbohidratos" type="button" data-picker-group="carbohidratos" aria-label="Elegir carbohidratos">
+              <span class="dock-button__emoji" aria-hidden="true">🌾</span>
+              <span class="dock-button__copy"><strong>Carbohidratos</strong><small>Energía</small></span>
+            </button>
+            <button class="dock-button dock-button--frutas" type="button" data-picker-group="frutas" aria-label="Elegir frutas">
+              <span class="dock-button__emoji" aria-hidden="true">🍎</span>
+              <span class="dock-button__copy"><strong>Frutas</strong><small>Vitaminas</small></span>
+            </button>
+            <button class="dock-button dock-button--vegetales" type="button" data-picker-group="vegetales" aria-label="Elegir vegetales">
+              <span class="dock-button__emoji" aria-hidden="true">🥦</span>
+              <span class="dock-button__copy"><strong>Vegetales</strong><small>Fibras</small></span>
+            </button>
+            <button class="dock-button dock-button--grasas" type="button" data-picker-group="grasas" aria-label="Elegir grasas saludables">
+              <span class="dock-button__emoji" aria-hidden="true">💧</span>
+              <span class="dock-button__copy"><strong>Grasas</strong><small>Saludables</small></span>
+            </button>
+          </div>
+        </nav>
+
+        <div class="first-hint" id="firstHint" aria-hidden="true">
+          <span aria-hidden="true">👆</span> Toca un grupo alimenticio para aprender
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite" data-tone="info">
+          <span class="toast__icon" id="toastIcon" aria-hidden="true">✨</span>
+          <span class="toast__text" id="toastText"></span>
+        </div>
+
+        <div class="sr-only" id="srAnnouncer" aria-live="assertive"></div>
+      </div>
+
+      <section class="success-layer" id="successLayer" aria-hidden="true">
+        <canvas class="confetti-canvas" id="confettiCanvas" aria-hidden="true"></canvas>
+        <div class="success-card">
+          <div class="success-card__main">
+            <img class="success-card__mascot" src="assets/images/yellow-chef.webp" alt="Yellow, el chef" width="640" height="640" draggable="false">
+            <div class="success-card__message">
+              <div class="success-card__stars" aria-hidden="true">★ ★ ★</div>
+              <p class="success-card__kicker">Receta completada</p>
+              <h2 id="successTitle" tabindex="-1">¡Desayuno Campeón listo!</h2>
+              <p class="success-card__copy" id="successCopy">¡Bravo, chef! Yellow está muy orgulloso de ti.</p>
+            </div>
+          </div>
+          <div class="success-card__actions">
+            <button class="primary-button" type="button" data-action="play-again">Cocinar otra vez</button>
+            <button class="soft-button" type="button" data-action="next-recipe">Otra receta</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal-root" id="modalRoot" hidden>
+        <div class="modal-backdrop" data-action="close-modal"></div>
+        <div class="modal-panel" id="modalPanel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1"></div>
+      </div>
+
+      <div class="rotate-nudge" role="status">
+        <span aria-hidden="true">🔄</span> Gira la pantalla para cocinar en grande
+      </div>
+    </main>
+
+    <noscript>
+      <div class="noscript">Activa JavaScript para jugar en La Cocina Mágica de Yellow.</div>
+    </noscript>
+  </div>
+</body>
+</html>

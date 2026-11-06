@@ -1,0 +1,9 @@
+# Recursos fuente originales de La Cocina Mágica.
+# La aplicación usa las copias optimizadas de cocina-magica/assets/.
+/cocina-magica/imagenes/
+/cocina-magica/videos/
+
+# Archivos de desarrollo de La Cocina Mágica.
+/cocina-magica/server.js
+/cocina-magica/package.json
+/cocina-magica/README.md

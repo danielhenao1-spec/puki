@@ -1,0 +1,21 @@
+{
+  "name": "cocina-magica-yellow",
+  "version": "1.2.0",
+  "private": true,
+  "description": "PWA educativa de preescolar: exploración de grupos alimenticios y reto del Plato Mágico con Yellow",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check app.js && node --check sw.js && node --check server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "preescolar",
+    "pwa",
+    "juego-educativo",
+    "saludable"
+  ],
+  "license": "UNLICENSED"
+}
