@@ -1,6 +1,6 @@
 /* La Cocina Mágica de Yellow - service worker offline */
 
-const CACHE_VERSION = "cocina-yellow-v5";
+const CACHE_VERSION = "cocina-yellow-v6";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const PRECACHE = [
@@ -25,6 +25,17 @@ const PRECACHE = [
   "./assets/images/plato-arepa.webp",
   "./assets/images/plato-arroz.webp",
   "./assets/images/plato-cereal.webp",
+  "./assets/images/plato-ensalada-frutas.webp",
+  "./assets/images/plato-pasta-bolonesa.webp",
+  "./assets/images/plato-pabellon.webp",
+  "./assets/images/plato-cesar.webp",
+  "./assets/images/preparar-arepa.webp",
+  "./assets/images/preparar-arroz.webp",
+  "./assets/images/preparar-cereal.webp",
+  "./assets/images/preparar-ensalada-frutas.webp",
+  "./assets/images/preparar-pasta-bolonesa.webp",
+  "./assets/images/preparar-pabellon.webp",
+  "./assets/images/preparar-cesar.webp",
   "./assets/images/door-poster.webp",
   "./assets/images/yellow-chef.webp",
   "./assets/images/ingredients/harina-maiz.webp",
@@ -36,6 +47,7 @@ const PRECACHE = [
   "./assets/images/ingredients/carne.webp",
   "./assets/images/ingredients/pescado.webp",
   "./assets/images/ingredients/huevos.webp",
+  "./assets/images/ingredients/caraotas.webp",
   "./assets/images/ingredients/leche.webp",
   "./assets/images/ingredients/queso.webp",
   "./assets/images/ingredients/yogurt.webp",
@@ -45,6 +57,7 @@ const PRECACHE = [
   "./assets/images/ingredients/manzana.webp",
   "./assets/images/ingredients/naranja.webp",
   "./assets/images/ingredients/patilla.webp",
+  "./assets/images/ingredients/platanos.webp",
   "./assets/images/ingredients/papa.webp",
   "./assets/images/ingredients/zanahoria.webp",
   "./assets/images/ingredients/brocoli.webp",
@@ -53,7 +66,7 @@ const PRECACHE = [
   "./assets/images/ingredients/pimenton.webp",
   "./assets/images/ingredients/aceite-oliva.webp",
   "./assets/images/ingredients/frutos-secos.webp",
-  "./assets/videos/1.mp4",
+  "./assets/videos/1-v2.mp4",
   "./assets/videos/2.mp4",
   "./assets/videos/3.mp4",
   "./assets/videos/4.mp4",

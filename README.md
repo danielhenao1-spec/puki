@@ -4,7 +4,7 @@ Repositorio de aplicaciones web del **Preescolar Puki**.
 
 ## La Cocina Mágica de Yellow
 
-PWA educativa de preescolar con dos modos: exploración de los seis grupos alimenticios y el reto del Plato Mágico. Incluye videos secuenciados de Yellow detrás de la puerta, carruseles educativos, validación de recetas, sonidos, confeti y funcionamiento offline.
+PWA educativa de preescolar con dos modos: exploración de los seis grupos alimenticios y el reto del Plato Mágico. Incluye siete recetas, 28 ingredientes, videos secuenciados de Yellow detrás de la puerta, carruseles educativos, validación de recetas, sonidos, confeti y funcionamiento offline.
 
 ![La Cocina Mágica de Yellow](cocina-magica/screenshots/cocina.webp)
 

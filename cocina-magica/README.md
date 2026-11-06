@@ -37,15 +37,13 @@ El service worker guarda imágenes, videos, fuentes y sonidos de la interfaz. De
 
 ## Publicación en Vercel
 
-La Cocina Mágica se publica desde este repositorio en:
+La Cocina Mágica se publica desde el repositorio `danielhenao1-spec/puki` en:
 
 ```text
 https://puki-blue.vercel.app/cocina-magica/
 ```
 
-Es una PWA estática que no requiere compilación. El repositorio ya está conectado a Vercel y cada `git push` a la rama `main` genera un deploy automático.
-
-La configuración compartida está en [vercel.json](../vercel.json). Incluye cabeceras especiales para el service worker y el manifest de la cocina. [.vercelignore](../.vercelignore) excluye las carpetas originales `imagenes/` y `videos/` del deploy, ya que la app usa las copias optimizadas de `assets/`. No se necesita ninguna variable de entorno.
+El repositorio está conectado a Vercel y cada `git push` a la rama `main` genera un deploy automático. La configuración compartida del repositorio define las cabeceras del service worker y del manifest, y excluye del deploy las carpetas originales `imagenes/` y `videos/`, ya que la app usa las copias optimizadas de `assets/`. No se necesita ninguna variable de entorno.
 
 ## Cómo se juega
 
@@ -67,7 +65,7 @@ Solo se entra tocando el **plato vacío del centro** o el botón **¡A cocinar!*
 2. Elige una receta con las flechas o los puntos del carrusel.
 3. Toca un grupo para abrir su selector y añade ingredientes. Los ingredientes también están agrupados por grupo alimenticio, no por mueble.
 4. La bandeja superior muestra los ingredientes separados por **+**. La **X roja** quita uno.
-5. Si un ingrediente no pertenece a la receta, vibra en rojo y Yellow avisa con una frase amable.
+5. Si un ingrediente no pertenece a la receta, vibra en rojo y aparece un aviso amable con un sonido suave.
 6. Al añadir el último ingrediente, el selector muestra **¡Ver mi plato!**. La celebración comienza cuando se cierra esa ventana, para que el plato final y el confeti se vean completos.
 7. El plato se transforma con un fundido, suena la celebración y aparece confeti de estrellas, sin voz.
 8. **Cocinar otra vez** repite la misma receta; **Otra receta** avanza el carrusel y vacía el plato.
@@ -83,10 +81,14 @@ Solo se entra tocando el **plato vacío del centro** o el botón **¡A cocinar!*
 | Desayuno Campeón | Harina de maíz, huevos y aguacate | Arepa con huevo y aguacate |
 | Almuerzo de los Súper Amigos | Arroz, pollo y papa | Arroz con pollo y puré de papa |
 | Súper Merienda Colorida | Cereal, leche, bananas y fresas | Cereal con leche, banana y fresa |
+| Ensalada de Frutas Colorida | Bananas, fresas, patilla y naranja | Ensalada de frutas fresca |
+| Pasta Boloñesa Infantil | Pasta, carne, tomate y queso | Pasta con carne y queso |
+| Pabellón Criollo | Arroz, carne, caraotas y plátanos | Pabellón criollo |
+| Ensalada César | Lechuga, pollo y pan | Ensalada César con crutones |
 
 ## Controles para dar clase
 
-- **Sonido:** activa o silencia efectos y voz. La preferencia se recuerda en el dispositivo.
+- **Sonido:** activa o silencia los efectos de sonido. La preferencia se recuerda en el dispositivo.
 - **Pantalla:** entra o sale de pantalla completa. También intenta bloquear la orientación horizontal en móviles compatibles.
 - **Ayuda:** explica los dos modos y los pasos del juego.
 - **Flechas del carrusel:** cambian de alimento en el lightbox educativo o de receta en el Plato Mágico.
@@ -96,7 +98,7 @@ Los botones son grandes y accesibles con teclado. `Esc` cierra los paneles; las 
 
 ## Personaje y transición de video
 
-- Los cinco clips (`1.mp4` … `5.mp4`) se reproducen en serie, en bucle y sin cortes visibles.
+- Los clips actuales (`1-v2.mp4`, `2.mp4` … `5.mp4`) se reproducen en serie, en bucle y sin cortes visibles.
 - Van en una capa **detrás** de `cocina-fondo.webp`. El hueco transparente del arco de la puerta deja ver a Yellow, alineado con el marco.
 - Se usan dos elementos `<video>`: mientras uno se reproduce, el siguiente se precarga y entra de forma cruzada al terminar.
 - El video se pausa al salir de la cocina o al ocultar la pestaña para ahorrar recursos.
@@ -115,11 +117,12 @@ Los botones son grandes y accesibles con teclado. `Esc` cierra los paneles; las 
 ├── assets/
 │   ├── fonts/               # Baloo 2 y Nunito locales
 │   ├── images/
-│   │   ├── ingredients/     # 26 ingredientes optimizados
+│   │   ├── ingredients/     # 28 ingredientes optimizados
 │   │   ├── cocina-fondo.webp
-│   │   ├── plato-*.webp     # Platos vacío y terminados
+│   │   ├── plato-*.webp     # Platos terminados
+│   │   ├── preparar-*.webp  # Vista previa de cada receta
 │   │   └── yellow-chef.webp
-│   └── videos/              # Secuencia 1.mp4 … 5.mp4
+│   └── videos/              # Secuencia 1-v2.mp4, 2.mp4 … 5.mp4
 ├── imagenes/                # Material original (sin modificar)
 └── videos/                  # Videos originales (sin modificar)
 ```
@@ -139,11 +142,11 @@ Si añades una imagen nueva, recuerda incluirla también en la lista `PRECACHE` 
 
 ## Notas
 
-- Las voces usan la síntesis de voz del navegador (`es-ES`) para los avisos de error. La celebración final usa sonido y confeti, pero no voz. La disponibilidad y el timbre dependen del sistema.
+- La app no usa voz sintetizada. La retroalimentación de errores y las celebraciones son visuales y sonoras.
 - Los videos necesitan que el navegador permita reproducción automática silenciada. Si el personaje no aparece en la puerta, toca una vez la pantalla.
 - El service worker requiere `localhost` o HTTPS. Si sirves el juego por IP de red local en HTTP, el juego funciona, pero la instalación y el modo offline pueden no estar disponibles en ese equipo.
 - Los assets originales de `imagenes/` y `videos/` se conservan sin cambios. El juego utiliza copias optimizadas en `assets/`.
-- El grupo **Proteínas** usa los alimentos disponibles en los assets. No hay imagen de caraotas o legumbres en el material original; si se añaden, pueden incorporarse a `GROUP_INGREDIENTS.proteinas` y al selector de ingredientes.
+- Los grupos alimenticios incluyen todos los alimentos disponibles en los assets: **Caraotas** está en Proteínas y **Plátanos** en Frutas.
 - **Lácteos** es un grupo independiente: leche, queso y yogurt tienen su propio hotspot, carrusel y botón de selección.
 
 Hecho con cariño para Pequeñines Chefs. 🍳

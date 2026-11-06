@@ -8,7 +8,7 @@
   "use strict";
 
   const VIDEO_PLAYLIST = [
-    "assets/videos/1.mp4",
+    "assets/videos/1-v2.mp4",
     "assets/videos/2.mp4",
     "assets/videos/3.mp4",
     "assets/videos/4.mp4",
@@ -25,7 +25,7 @@
       tint: "#d8f1ff",
       accent: "#5cb7de",
       explanation:
-        "Las proteínas nos ayudan a crecer fuertes y a tener músculos sanos. Las encontramos en alimentos como el huevo, el pollo, la carne y el pescado.",
+        "Las proteínas nos ayudan a crecer fuertes y a tener músculos sanos. Las encontramos en alimentos como el huevo, el pollo, la carne, el pescado y las caraotas.",
       fact: "Come proteínas en tus comidas para crecer y tener energía para jugar.",
     },
     lacteos: {
@@ -95,6 +95,7 @@
     carne: { name: "Carne", category: "proteinas", image: "assets/images/ingredients/carne.webp" },
     pescado: { name: "Pescado", category: "proteinas", image: "assets/images/ingredients/pescado.webp" },
     huevos: { name: "Huevos", category: "proteinas", image: "assets/images/ingredients/huevos.webp" },
+    caraotas: { name: "Caraotas", category: "proteinas", image: "assets/images/ingredients/caraotas.webp" },
     leche: { name: "Leche", category: "lacteos", image: "assets/images/ingredients/leche.webp" },
     queso: { name: "Queso", category: "lacteos", image: "assets/images/ingredients/queso.webp" },
     yogurt: { name: "Yogurt", category: "lacteos", image: "assets/images/ingredients/yogurt.webp" },
@@ -109,6 +110,7 @@
     manzana: { name: "Manzana", category: "frutas", image: "assets/images/ingredients/manzana.webp" },
     naranja: { name: "Naranja", category: "frutas", image: "assets/images/ingredients/naranja.webp" },
     patilla: { name: "Patilla", category: "frutas", image: "assets/images/ingredients/patilla.webp" },
+    platanos: { name: "Plátanos", category: "frutas", image: "assets/images/ingredients/platanos.webp" },
     papa: { name: "Papa", category: "vegetales", image: "assets/images/ingredients/papa.webp" },
     zanahoria: { name: "Zanahoria", category: "vegetales", image: "assets/images/ingredients/zanahoria.webp" },
     brocoli: { name: "Brócoli", category: "vegetales", image: "assets/images/ingredients/brocoli.webp" },
@@ -124,10 +126,10 @@
   };
 
   const GROUP_INGREDIENTS = {
-    proteinas: ["huevos", "pollo", "carne", "pescado"],
+    proteinas: ["huevos", "caraotas", "pollo", "carne", "pescado"],
     lacteos: ["leche", "queso", "yogurt"],
     carbohidratos: ["harina-maiz", "arroz", "pan", "pasta", "cereal"],
-    frutas: ["aguacate", "bananas", "fresas", "manzana", "naranja", "patilla"],
+    frutas: ["aguacate", "bananas", "fresas", "manzana", "naranja", "patilla", "platanos"],
     vegetales: ["papa", "zanahoria", "brocoli", "lechuga", "tomate", "pimenton"],
     grasas: ["aceite-oliva", "frutos-secos"],
   };
@@ -140,6 +142,7 @@
       subtitle: "Arepa, huevo y aguacate",
       description: "Un desayuno con energía para empezar el día.",
       ingredients: ["harina-maiz", "huevos", "aguacate"],
+      previewImage: "assets/images/preparar-arepa.webp",
       finalImage: "assets/images/plato-arepa.webp",
       successCopy: "¡Bravo! Tu arepa con huevo y aguacate tiene energía para todo el día.",
     },
@@ -150,6 +153,7 @@
       subtitle: "Arroz, pollo y puré de papa",
       description: "Un plato completo para jugar con los Súper Amigos.",
       ingredients: ["arroz", "pollo", "papa"],
+      previewImage: "assets/images/preparar-arroz.webp",
       finalImage: "assets/images/plato-arroz.webp",
       successCopy: "¡Qué rico! Arroz, pollo y puré de papa para los Súper Amigos.",
     },
@@ -160,8 +164,53 @@
       subtitle: "Cereal, leche, banana y fresa",
       description: "Una merienda colorida y deliciosa para compartir.",
       ingredients: ["cereal", "leche", "bananas", "fresas"],
+      previewImage: "assets/images/preparar-cereal.webp",
       finalImage: "assets/images/plato-cereal.webp",
       successCopy: "¡Colorida y deliciosa! Cereal, leche, banana y fresa para compartir.",
+    },
+    ensaladaFrutas: {
+      id: "ensalada-frutas",
+      title: "Ensalada de Frutas Colorida",
+      meal: "Merienda",
+      subtitle: "Banana, fresa, patilla y naranja",
+      description: "Una merienda fresca, colorida y llena de vitaminas.",
+      ingredients: ["bananas", "fresas", "patilla", "naranja"],
+      previewImage: "assets/images/preparar-ensalada-frutas.webp",
+      finalImage: "assets/images/plato-ensalada-frutas.webp",
+      successCopy: "¡Fresca y colorida! Tu ensalada de frutas tiene vitaminas para jugar.",
+    },
+    pastaBolonesa: {
+      id: "pasta-bolonesa",
+      title: "Pasta Boloñesa Infantil",
+      meal: "Almuerzo",
+      subtitle: "Pasta, carne, tomate y queso",
+      description: "Pasta con carne y queso: un almuerzo que encanta.",
+      ingredients: ["pasta", "carne", "tomate", "queso"],
+      previewImage: "assets/images/preparar-pasta-bolonesa.webp",
+      finalImage: "assets/images/plato-pasta-bolonesa.webp",
+      successCopy: "¡Qué rica! La pasta boloñesa tiene energía y proteínas para crecer.",
+    },
+    pabellon: {
+      id: "pabellon",
+      title: "Pabellón Criollo",
+      meal: "Almuerzo",
+      subtitle: "Arroz, carne, caraotas y plátano",
+      description: "Un plato venezolano lleno de sabor y energía.",
+      ingredients: ["arroz", "carne", "caraotas", "platanos"],
+      previewImage: "assets/images/preparar-pabellon.webp",
+      finalImage: "assets/images/plato-pabellon.webp",
+      successCopy: "¡Un plato venezolano! Arroz, carne, caraotas y plátano para disfrutar.",
+    },
+    cesar: {
+      id: "cesar",
+      title: "Ensalada César",
+      meal: "Cena",
+      subtitle: "Lechuga, pollo y pan tostado",
+      description: "Lechuga crujiente, pollo y pan tostado.",
+      ingredients: ["lechuga", "pollo", "pan"],
+      previewImage: "assets/images/preparar-cesar.webp",
+      finalImage: "assets/images/plato-cesar.webp",
+      successCopy: "¡Crujiente y deliciosa! Lechuga, pollo y pan tostado para disfrutar.",
     },
   };
 
@@ -299,7 +348,7 @@
   }
 
   /* =========================================================
-     Sonido y voz
+     Sonido y efectos
      ========================================================= */
 
   function ensureAudioContext() {
@@ -384,27 +433,6 @@
     playTone(1567.98, { duration: 0.5, delay: 0.58, gain: 0.025, type: "sine" });
   }
 
-  function speakSpanish(text) {
-    if (!state.soundOn || !("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
-      return;
-    }
-
-    try {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "es-ES";
-      utterance.rate = 0.96;
-      utterance.pitch = 1.12;
-      utterance.volume = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const spanishVoice = voices.find((voice) => /^es/i.test(voice.lang));
-      if (spanishVoice) utterance.voice = spanishVoice;
-      window.speechSynthesis.speak(utterance);
-    } catch (error) {
-      /* La voz es un extra: el toast y los sonidos siguen funcionando. */
-    }
-  }
-
   function setSound(on, options = {}) {
     const { silent = false } = options;
     state.soundOn = Boolean(on);
@@ -414,7 +442,6 @@
     dom.soundButton.setAttribute("aria-label", state.soundOn ? "Silenciar sonidos" : "Activar sonidos");
 
     if (!state.soundOn) {
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
       if (!silent) {
         showToast("Sonidos en silencio. Puedes activarlos cuando quieras.", "info", "🔇", 2600);
       }
@@ -479,8 +506,8 @@
     const recipe = currentRecipe();
     const recipeIds = Object.keys(RECIPES);
     const recipePosition = recipeIds.indexOf(state.recipeId);
-    dom.recipeThumb.src = recipe.finalImage;
-    dom.recipeThumb.alt = `Plato terminado: ${recipe.title}`;
+    dom.recipeThumb.src = recipe.previewImage ?? recipe.finalImage;
+    dom.recipeThumb.alt = `Vista previa del plato: ${recipe.title}`;
     dom.recipeTitle.textContent = recipe.title;
     dom.recipeSubtitle.textContent = recipe.subtitle;
     dom.recipeCount.textContent = `${recipePosition + 1} de ${recipeIds.length}`;
@@ -606,7 +633,6 @@
 
     if (!correct) {
       playErrorSound();
-      speakSpanish(ERROR_PHRASE);
       showToast(`${ERROR_PHRASE} Prueba con otro ingrediente.`, "error", "🙈", 4400);
       window.setTimeout(() => retriggerWrongShake(id), 40);
 
@@ -1722,6 +1748,7 @@
     const urls = new Set([
       ...Object.values(INGREDIENTS).map((ingredient) => ingredient.image),
       ...Object.values(RECIPES).map((recipe) => recipe.finalImage),
+      ...Object.values(RECIPES).map((recipe) => recipe.previewImage).filter(Boolean),
       "assets/images/plato-vacio.webp",
     ]);
 
@@ -1789,13 +1816,6 @@
       handleFirstInteraction();
     };
     document.addEventListener("pointerdown", prepareGestureAudio, { passive: true, once: true });
-
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.getVoices();
-      window.speechSynthesis.addEventListener?.("voiceschanged", () => {
-        window.speechSynthesis.getVoices();
-      });
-    }
   }
 
   function updateFullscreenButton() {
