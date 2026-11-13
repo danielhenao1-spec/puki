@@ -7,3 +7,10 @@
 /cocina-magica/server.js
 /cocina-magica/package.json
 /cocina-magica/README.md
+
+# Archivos de desarrollo y capturas de Día Mundial de la Amabilidad.
+# La aplicación publicada usa directamente su carpeta Fuentes/.
+/dia-mundial-amabilidad/servidor.mjs
+/dia-mundial-amabilidad/iniciar.cmd
+/dia-mundial-amabilidad/README.md
+/dia-mundial-amabilidad/capturas/

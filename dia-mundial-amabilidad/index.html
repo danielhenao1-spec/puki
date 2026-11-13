@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6ecbff">
+  <meta name="description" content="Una experiencia interactiva de la Escuela Puki para celebrar el Día Mundial de la Amabilidad con Yellow el león.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Amabilidad Puki">
+  <title>Día Mundial de la Amabilidad · Escuela Puki</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/favicon.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preload" href="Fuentes/fondo-casita-puki.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <main class="stage" id="stage" aria-label="Día Mundial de la Amabilidad en la Escuela Puki">
+      <img class="scene" src="Fuentes/fondo-casita-puki.webp" alt="Casita de juegos de la Escuela Puki decorada para el Día Mundial de la Amabilidad" draggable="false">
+      <div class="scene-wash" aria-hidden="true"></div>
+
+      <!-- Portal de Yellow: cuatro capas de video con transición de opacidad -->
+      <div class="portal-halo" aria-hidden="true"></div>
+      <div class="portal" id="portal" role="img" aria-label="Portal de Yellow, el león de la Escuela Puki">
+        <div class="portal-videos" id="portalVideos">
+          <video class="portal-video is-active" id="videoIdle" data-state="idle" src="Fuentes/yellow_idle.mp4"
+                 autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+          <video class="portal-video" id="videoHappy" data-state="happy" src="Fuentes/yellow_happy.mp4"
+                 muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+          <video class="portal-video" id="videoTransform" data-state="transform" src="Fuentes/yellow_transform.mp4"
+                 muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+          <video class="portal-video" id="videoSuperhero" data-state="superhero" src="Fuentes/yellow_superhero_idle.mp4"
+                 muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+        </div>
+        <div class="portal-shine" aria-hidden="true"></div>
+        <div class="portal-rim" aria-hidden="true"></div>
+      </div>
+
+      <div class="magic-sparks" id="magicSparks" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <!-- Ventanita del corazón: las cinco luces son CSS puro -->
+      <div class="heart-window" id="heartWindow" role="progressbar" aria-label="Corazón de Yellow" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+        <div class="heart-wash" aria-hidden="true"></div>
+        <div class="heart-core" aria-hidden="true"></div>
+        <div class="heart-lights" aria-hidden="true">
+          <span class="heart-light h1" style="--light:#48c7ff"></span>
+          <span class="heart-light h2" style="--light:#7eea77"></span>
+          <span class="heart-light h3" style="--light:#ffd447"></span>
+          <span class="heart-light h4" style="--light:#ff8ebc"></span>
+          <span class="heart-light h5" style="--light:#c29bff"></span>
+        </div>
+        <span class="heart-caption" aria-hidden="true">Corazón amable</span>
+      </div>
+
+      <div class="top-ui">
+        <section class="mission-card" id="missionCard" aria-labelledby="missionTitle">
+          <div class="mission-live" id="missionLive">
+            <div class="brandline">
+              <span class="puki-badge" aria-hidden="true">P</span>
+              <span class="brand-name">Escuela Puki</span>
+              <span class="brand-sep" aria-hidden="true"></span>
+              <span class="brand-date">13 de noviembre</span>
+            </div>
+
+            <p class="mission-kicker">Día Mundial de la Amabilidad</p>
+            <h1 class="mission-title" id="missionTitle">Llena el corazón<br><span>de Yellow</span></h1>
+            <p class="mission-copy" id="missionCopy">Toca los cinco orbes y descubre cómo llenar de luz su corazón.</p>
+
+            <div class="mission-progress" id="missionProgress" role="progressbar" aria-label="Actos de amabilidad completados" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+              <div class="mission-dots" id="missionDots" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="progress-text"><strong id="progressCount">0</strong> de 5</span>
+            </div>
+          </div>
+
+          <div class="mission-done" id="missionDone">
+            <div class="done-seal" aria-hidden="true">
+              <svg viewBox="0 0 64 64" focusable="false"><path d="M32 5.5l7.3 16.1 17.5 1.9-13 12 3.5 17.3L32 44.3 16.7 52.8l3.5-17.3-13-12 17.5-1.9L32 5.5z" fill="currentColor"/></svg>
+            </div>
+            <div class="done-copy">
+              <p class="done-kicker">¡Misión cumplida!</p>
+              <h2 id="doneTitle">Yellow es un superhéroe de la amabilidad</h2>
+              <button class="replay-btn" id="replayButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-15.5-3M4 4v5h5M4 13a8.1 8.1 0 0 0 15.5 3M20 20v-5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Jugar otra vez
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <nav class="controls" aria-label="Controles de la actividad">
+          <button class="control-btn" id="soundButton" type="button" aria-label="Silenciar sonido" aria-pressed="true" title="Sonido">
+            <span class="control-icon">
+              <svg class="icon-sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h4l5 4v-13l-5 4H4z" fill="currentColor"/><path d="M16 8.3a5.5 5.5 0 0 1 0 7.4M18.8 5.5a9.2 9.2 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="icon-sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h4l5 4v-13l-5 4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>
+            </span>
+            <span class="control-label" id="soundLabel">Sonido</span>
+          </button>
+
+          <button class="control-btn" id="installButton" type="button" aria-label="Instalar aplicación" title="Instalar aplicación" hidden>
+            <span class="control-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 16v3.5h14V16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="control-label">Instalar</span>
+          </button>
+
+          <button class="control-btn" id="fullscreenButton" type="button" aria-label="Pantalla completa" title="Pantalla completa">
+            <span class="control-icon">
+              <svg class="icon-expand" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 4H4v4.5M15.5 4H20v4.5M20 15.5V20h-4.5M8.5 20H4v-4.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="icon-collapse" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h4.5V4M20 8.5h-4.5V4M15.5 20v-4.5H20M8.5 20v-4.5H4" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="control-label">Pantalla</span>
+          </button>
+
+          <button class="control-btn control-btn--reset" id="resetButton" type="button" aria-label="Reiniciar la actividad" title="Reiniciar">
+            <span class="control-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-15.5-3M4 4v5h5M4 13a8.1 8.1 0 0 0 15.5 3M20 20v-5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="control-label">Reiniciar</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="foreground" aria-hidden="true"></div>
+
+      <div class="orb-dock">
+        <p class="orb-hint" id="orbHint"><span class="hint-dot" aria-hidden="true"></span><span id="hintText">Toca un orbe para comenzar</span></p>
+        <div class="orb-row" id="orbRow" role="group" aria-label="Los cinco actos de amabilidad">
+          <button class="orb" type="button" data-orb="1" data-value="transito" aria-pressed="false" aria-label="Orbe 1: saludar al personal de tránsito" style="--orb-color:#49c7ff; --orb-deep:#0877bd;">
+            <span class="orb-disc">
+              <video class="orb-video" src="Fuentes/orbe_transito.mp4" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+              <span class="orb-tint" aria-hidden="true"></span>
+              <span class="orb-icon" aria-hidden="true">🚸</span>
+              <span class="orb-gloss" aria-hidden="true"></span>
+              <span class="orb-number" aria-hidden="true">1</span>
+              <span class="orb-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </span>
+            <span class="orb-label"><strong>Saludo</strong><small>al tránsito</small></span>
+          </button>
+
+          <button class="orb" type="button" data-orb="2" data-value="limpieza" aria-pressed="false" aria-label="Orbe 2: saludar al personal de limpieza" style="--orb-color:#7bdb70; --orb-deep:#228c48;">
+            <span class="orb-disc">
+              <video class="orb-video" src="Fuentes/orbe_limpieza.mp4" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+              <span class="orb-tint" aria-hidden="true"></span>
+              <span class="orb-icon" aria-hidden="true">🧹</span>
+              <span class="orb-gloss" aria-hidden="true"></span>
+              <span class="orb-number" aria-hidden="true">2</span>
+              <span class="orb-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </span>
+            <span class="orb-label"><strong>Saludo</strong><small>a limpieza</small></span>
+          </button>
+
+          <button class="orb" type="button" data-orb="3" data-value="cortesia" aria-pressed="false" aria-label="Orbe 3: pedir por favor y dar las gracias" style="--orb-color:#ffd34a; --orb-deep:#c48200;">
+            <span class="orb-disc">
+              <video class="orb-video" src="Fuentes/orbe_cortesia.mp4" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+              <span class="orb-tint" aria-hidden="true"></span>
+              <span class="orb-icon" aria-hidden="true">🙏</span>
+              <span class="orb-gloss" aria-hidden="true"></span>
+              <span class="orb-number" aria-hidden="true">3</span>
+              <span class="orb-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </span>
+            <span class="orb-label"><strong>Cortesía</strong><small>por favor</small></span>
+          </button>
+
+          <button class="orb" type="button" data-orb="4" data-value="abrazo" aria-pressed="false" aria-label="Orbe 4: dar un abrazo suave" style="--orb-color:#ff8ebd; --orb-deep:#be3b78;">
+            <span class="orb-disc">
+              <video class="orb-video" src="Fuentes/orbe_abrazo.mp4" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+              <span class="orb-tint" aria-hidden="true"></span>
+              <span class="orb-icon" aria-hidden="true">🤗</span>
+              <span class="orb-gloss" aria-hidden="true"></span>
+              <span class="orb-number" aria-hidden="true">4</span>
+              <span class="orb-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </span>
+            <span class="orb-label"><strong>Abrazo</strong><small>suavecito</small></span>
+          </button>
+
+          <button class="orb" type="button" data-orb="5" data-value="juguetes" aria-pressed="false" aria-label="Orbe 5: compartir juguetes" style="--orb-color:#bf9bff; --orb-deep:#6d43bd;">
+            <span class="orb-disc">
+              <video class="orb-video" src="Fuentes/orbe_juguetes.mp4" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+              <span class="orb-tint" aria-hidden="true"></span>
+              <span class="orb-icon" aria-hidden="true">🧸</span>
+              <span class="orb-gloss" aria-hidden="true"></span>
+              <span class="orb-number" aria-hidden="true">5</span>
+              <span class="orb-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </span>
+            <span class="orb-label"><strong>Compartir</strong><small>juguetes</small></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="magic-flash" id="magicFlash" aria-hidden="true"></div>
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+      <div class="climax-title" id="climaxTitle" aria-hidden="true">
+        <span class="climax-star">✦</span>
+        <strong>¡El corazón de Yellow brilla!</strong>
+        <span class="climax-star">✦</span>
+      </div>
+
+      <p class="sr-only" id="liveRegion" aria-live="assertive" aria-atomic="true"></p>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+      <div class="rotate-note" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M7 4h7a4 4 0 0 1 4 4v5M7 4L4 7m3-3L4 1m13 12l-2 3m2-3l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Gira el dispositivo para ver la casita completa
+      </div>
+    </main>
+  </div>
+
+  <noscript>
+    <p class="noscript-note">Activa JavaScript para vivir la experiencia interactiva de amabilidad.</p>
+  </noscript>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

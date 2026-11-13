@@ -23,19 +23,30 @@ Aplicación web interactiva del **Preescolar Puki** para el proyecto **Meet The 
 - [Tarjeta para compartir por WhatsApp](meet-the-masters/imagenes/compartir-whatsapp-cuadrada.jpg)
 - **URL de producción:** https://puki-blue.vercel.app/meet-the-masters/
 
+## Día Mundial de la Amabilidad
+
+PWA táctil para el aula de preescolar. Los niños encienden cinco orbes de buenas acciones, completan la ventanita del corazón de Yellow y lo acompañan en su transformación en superhéroe. Incluye videos con sonido, animaciones de celebración, instalación como aplicación y funcionamiento offline.
+
+![Día Mundial de la Amabilidad](dia-mundial-amabilidad/capturas/vista-general.jpg)
+
+- [Aplicación web](dia-mundial-amabilidad/index.html)
+- [Instrucciones y estructura](dia-mundial-amabilidad/README.md)
+- **URL de producción:** https://puki-blue.vercel.app/dia-mundial-amabilidad/
+
 ## Despliegue en Vercel
 
-Ambos proyectos son sitios estáticos que no requieren compilación. El repositorio está conectado a Vercel y cada push a la rama `main` actualiza el despliegue automáticamente.
+Los tres proyectos son sitios estáticos que no requieren compilación. El repositorio está conectado a Vercel y cada push a la rama `main` actualiza el despliegue automáticamente.
 
-La configuración compartida de Vercel está en [vercel.json](vercel.json). La Cocina Mágica añade cabeceras específicas para su service worker y su manifest; sus recursos fuente originales se excluyen del deploy mediante [.vercelignore](.vercelignore).
+La configuración compartida de Vercel está en [vercel.json](vercel.json). La Cocina Mágica y Día Mundial de la Amabilidad añaden cabeceras específicas para sus service workers y manifests; sus recursos de desarrollo y fuentes originales se excluyen del deploy mediante [.vercelignore](.vercelignore).
 
 ## Uso local
 
 - **La Cocina Mágica:** abre `cocina-magica/index.html` o ejecuta `node server.js` dentro de `cocina-magica/`.
 - **Meet The Masters:** abre `meet-the-masters/index.html` en un navegador moderno.
+- **Día Mundial de la Amabilidad:** dentro de `dia-mundial-amabilidad/`, ejecuta `node servidor.mjs --open` o abre `iniciar.cmd`.
 
-Ambas aplicaciones están pensadas para pantalla horizontal.
+Las tres aplicaciones están pensadas para pantalla horizontal.
 
 ## Proyecto
 
-Preescolar Puki · Proyectos escolares **La Cocina Mágica de Yellow** y **Meet The Masters**.
+Preescolar Puki · Proyectos escolares **La Cocina Mágica de Yellow**, **Meet The Masters** y **Día Mundial de la Amabilidad**.
