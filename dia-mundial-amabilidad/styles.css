@@ -1,5 +1,5 @@
 /* =========================================================
-   Día Mundial de la Amabilidad · Escuela Puki
+   Día Mundial de la Amabilidad · Preescolar Puki
    Escena 16:9, táctil y luminosa.
    ========================================================= */
 
@@ -754,7 +754,7 @@ img {
 .control-icon {
   display: grid;
   place-items: center;
-  width: clamp(17px, 1.16cqw, 24px);
+  width: clamp(20px, 1.28cqw, 27px);
   aspect-ratio: 1;
   flex: 0 0 auto;
 }
@@ -911,6 +911,7 @@ img {
   text-align: center;
   cursor: pointer;
   touch-action: manipulation;
+  overflow: visible;
   transition: transform .22s ease;
 }
 
@@ -1017,22 +1018,24 @@ img {
 
 .orb-number {
   position: absolute;
-  z-index: 6;
-  left: 7%;
-  top: 7%;
+  z-index: 9;
+  left: 1.5%;
+  top: -3.5%;
   display: grid;
   place-items: center;
-  width: clamp(19px, 1.55cqw, 32px);
+  width: clamp(20px, 1.65cqw, 34px);
   aspect-ratio: 1;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, .5);
-  background: rgba(4, 27, 52, .7);
+  border: max(1px, .07cqw) solid rgba(255, 255, 255, .68);
+  background: rgba(4, 27, 52, .84);
   color: #fffdf0;
-  font-size: clamp(9px, .78cqw, 15px);
+  font-size: clamp(10px, .84cqw, 16px);
   font-weight: 900;
   line-height: 1;
   backdrop-filter: blur(5px);
-  box-shadow: 0 .2cqw .45cqw rgba(2, 15, 31, .3);
+  box-shadow:
+    0 .22cqw .5cqw rgba(2, 15, 31, .38),
+    inset 0 .08cqw 0 rgba(255, 255, 255, .18);
   transition: opacity .25s ease, transform .25s ease;
 }
 
@@ -1085,6 +1088,15 @@ img {
   font-size: clamp(10px, .86cqw, 17px);
   font-weight: 900;
   letter-spacing: .005em;
+}
+
+.orb-label--wide {
+  min-width: 120%;
+}
+
+.orb-label--wide strong {
+  font-size: clamp(9px, .8cqw, 15px);
+  line-height: 1.08;
 }
 
 .orb-label small {
@@ -1319,19 +1331,6 @@ img {
    --------------------------------------------------------- */
 
 @container stage (max-width: 1280px) {
-  .control-label {
-    display: none;
-  }
-
-  .control-btn {
-    width: 44px;
-    padding: 0;
-  }
-
-  .controls {
-    gap: .42cqw;
-  }
-
   .mission-card {
     width: 31cqw;
   }
@@ -1347,6 +1346,14 @@ img {
 
   .orb-row {
     gap: 2.3cqw;
+  }
+}
+
+@container stage (max-width: 1100px) {
+  /* Las etiquetas largas comparten altura para que la fila de orbes quede
+     pareja, aunque el texto ocupe dos o tres líneas. */
+  .orb-label {
+    min-height: 3.8cqw;
   }
 }
 
@@ -1408,7 +1415,7 @@ img {
   }
 
   .orb-label {
-    min-height: 3.4cqw;
+    min-height: 4.15cqw;
   }
 
   .orb-row {
@@ -1423,6 +1430,24 @@ img {
     top: 18%;
     font-size: clamp(10px, 1.3cqw, 14px);
     padding: .7cqw 1.2cqw;
+  }
+}
+
+/* En pantallas muy estrechas los controles pasan a ser solo iconos,
+   pero en tabletas y portátiles conservan su etiqueta para mayor claridad. */
+@container stage (max-width: 860px) {
+  .control-label {
+    display: none;
+  }
+
+  .control-btn {
+    width: 44px;
+    min-width: 44px;
+    padding: 0;
+  }
+
+  .controls {
+    gap: .42cqw;
   }
 }
 

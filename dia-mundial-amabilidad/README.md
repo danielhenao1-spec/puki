@@ -1,4 +1,4 @@
-# Día Mundial de la Amabilidad · Escuela Puki
+# Día Mundial de la Amabilidad · Preescolar Puki
 
 PWA interactiva y táctil para educación preescolar. La maestra y los niños tocan cinco orbes de buenas acciones; cada orbe enciende una luz de la ventanita del corazón y, al completar los cinco, Yellow el león se transforma en superhéroe.
 
@@ -55,8 +55,8 @@ La app se abre en horizontal y en pantalla completa. En la primera visita descar
 | Acción | Resultado |
 | --- | --- |
 | Toca un orbe inferior | Reproduce el video de ese acto de amabilidad y enciende una luz del corazón. |
-| Toca los cinco orbes | Yellow hace una celebración y, al quinto, comienza su transformación. |
-| **Sonido** | Activa o silencia el audio de todos los videos, incluidos los cuatro estados de Yellow. |
+| Toca los cinco orbes | Yellow celebra con una de sus tres animaciones y, al quinto, comienza su transformación. |
+| **Sonido** | Activa o silencia el audio de todos los videos de Yellow y de los orbes. |
 | **Pantalla** | Entra o sale de pantalla completa. |
 | **Reiniciar** | Apaga todas las luces, detiene los videos y vuelve al inicio para repetir la dinámica. |
 | **Instalar** | Aparece cuando el navegador permite instalar la PWA. |
@@ -82,6 +82,7 @@ capturas/               Vistas previas de la actividad
 
 - **Textos y mensajes:** `VALUES` y los textos de `index.html` / `app.js`.
 - **Duración de los videos:** se respeta la duración real de cada archivo. La celebración de Yellow vuelve a `yellow_idle.mp4` cuando termina su clip, no con un corte fijo.
+- **Celebraciones de Yellow:** la rotación usa `yellow_happy.mp4`, `yellow_celebrate_2.mp4` y `yellow_celebrate_3.mp4`. Las tres aparecen antes de repetirse y nunca se reproduce la misma dos veces seguidas.
 - **Nombre o fecha del evento:** misión superior en `index.html`.
 - **Colores de los orbes:** variables `--orb-color` y `--orb-deep` en cada botón de orbe, o los estilos de `.heart-light`.
 - **Videos:** conserva los nombres de archivo en `Fuentes/` o actualiza las rutas en `index.html` y la lista `CORE_ASSETS` de `sw.js`.
@@ -91,8 +92,9 @@ Si cambias videos o archivos cacheados manteniendo el mismo nombre, sube la vers
 ## Detalles de implementación
 
 - Escena panorámica 16:9 centrada con `cqw`/`cqh` para escalar tipografía y controles a cualquier pantalla.
-- Los cuatro estados de Yellow son etiquetas `<video>` apiladas con `preload="auto"` y transiciones de opacidad de `0.2s`.
+- Los seis videos de Yellow (`idle`, las tres celebraciones, `transform` y `superhero`) son etiquetas `<video>` apiladas con `preload="auto"` y transiciones de opacidad de `0.2s`.
 - La ventanita del corazón usa exclusivamente CSS para sus cinco luces: `blur()`, `box-shadow`, filtros y `color-mix()`.
 - La celebración y la transformación avanzan con el evento `ended` de cada video, para reproducir siempre sus 10 segundos completos.
+- La rotación de celebraciones usa una bolsa barajada: las tres se muestran antes de repetir y nunca se encadenan dos iguales.
 - Respeta `prefers-reduced-motion`, incluye foco visible y textos alternativos para lectores de pantalla.
-- Todos los videos de Yellow (`idle`, `happy`, `transform` y `superhero_idle`) incluyen su audio. Por las políticas de autoplay, el primer toque o clic en la pantalla es el que habilita el sonido; el control **Sonido** silencia o reactiva todos los videos.
+- Todos los videos de Yellow (`idle`, `happy`, `celebrate_2`, `celebrate_3`, `transform` y `superhero_idle`) incluyen su audio. Por las políticas de autoplay, el primer toque o clic en la pantalla es el que habilita el sonido; el control **Sonido** silencia o reactiva todos los videos.

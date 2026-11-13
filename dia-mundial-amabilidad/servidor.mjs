@@ -1,5 +1,5 @@
 /*
-  Servidor local para la PWA de la Escuela Puki.
+  Servidor local para la PWA de Preescolar Puki.
   Sin dependencias: solo Node.js 18 o superior.
 
   Uso:
@@ -173,7 +173,7 @@ const server = createServer(async (request, response) => {
 server.listen(PORT, "127.0.0.1", () => {
   const url = `http://localhost:${PORT}/`;
   console.log("");
-  console.log("  Día Mundial de la Amabilidad · Escuela Puki");
+  console.log("  Día Mundial de la Amabilidad · Preescolar Puki");
   console.log("  ------------------------------------------");
   console.log(`  Aplicación disponible en: ${url}`);
   console.log("  Pulsa Ctrl+C para detener el servidor.");

@@ -1,9 +1,9 @@
 /* =========================================================
-   Día Mundial de la Amabilidad · Escuela Puki
+   Día Mundial de la Amabilidad · Preescolar Puki
    Service worker: experiencia completa disponible sin conexión.
    ========================================================= */
 
-const CACHE_VERSION = "puki-amabilidad-v1.0.3";
+const CACHE_VERSION = "puki-amabilidad-v1.0.4";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -13,6 +13,8 @@ const CORE_ASSETS = [
   "./Fuentes/fondo-casita-puki.webp",
   "./Fuentes/yellow_idle.mp4",
   "./Fuentes/yellow_happy.mp4",
+  "./Fuentes/yellow_celebrate_2.mp4",
+  "./Fuentes/yellow_celebrate_3.mp4",
   "./Fuentes/yellow_transform.mp4",
   "./Fuentes/yellow_superhero_idle.mp4",
   "./Fuentes/orbe_transito.mp4",

@@ -25,7 +25,7 @@ Aplicación web interactiva del **Preescolar Puki** para el proyecto **Meet The 
 
 ## Día Mundial de la Amabilidad
 
-PWA táctil para el aula de preescolar. Los niños encienden cinco orbes de buenas acciones, completan la ventanita del corazón de Yellow y lo acompañan en su transformación en superhéroe. Incluye videos con sonido, animaciones de celebración, instalación como aplicación y funcionamiento offline.
+PWA táctil para el aula de preescolar. Los niños encienden cinco orbes de buenas acciones, completan la ventanita del corazón de Yellow y lo acompañan en su transformación en superhéroe. Incluye videos con sonido, tres celebraciones rotativas de Yellow, instalación como aplicación y funcionamiento offline.
 
 ![Día Mundial de la Amabilidad](dia-mundial-amabilidad/capturas/vista-general.jpg)
 

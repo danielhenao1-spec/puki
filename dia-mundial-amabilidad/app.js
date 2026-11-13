@@ -1,5 +1,5 @@
 /* =========================================================
-   Día Mundial de la Amabilidad · Escuela Puki
+   Día Mundial de la Amabilidad · Preescolar Puki
    Lógica de la experiencia interactiva.
    ========================================================= */
 
@@ -58,9 +58,13 @@
   const replayButton = $("#replayButton");
   const missionDone = $("#missionDone");
 
+  const CELEBRATION_KEYS = ["happy", "celebrate2", "celebrate3"];
+
   const portalVideos = {
     idle: $("#videoIdle"),
     happy: $("#videoHappy"),
+    celebrate2: $("#videoCelebrate2"),
+    celebrate3: $("#videoCelebrate3"),
     transform: $("#videoTransform"),
     superhero: $("#videoSuperhero"),
   };
@@ -77,6 +81,8 @@
     completed: false,
     sound: readSoundPreference(),
     audioUnlocked: false,
+    celebrationPool: [],
+    lastCelebration: null,
     transformToken: 0,
     toastTimer: null,
     climaxTimer: null,
@@ -110,19 +116,11 @@
   }
 
   function configureVideos() {
-    portalVideos.idle.muted = true;
-    portalVideos.idle.loop = true;
-    portalVideos.happy.loop = false;
-    portalVideos.happy.muted = true;
-    portalVideos.transform.loop = false;
-    portalVideos.transform.muted = true;
-    portalVideos.superhero.loop = true;
-    portalVideos.superhero.muted = true;
-
-    // Los cuatro estados de Yellow llevan audio. El primer toque en la página
-    // desbloquea el sonido; hasta entonces se mantienen silenciosos para que
-    // el autoplay no sea bloqueado por el navegador.
-    Object.values(portalVideos).forEach((video) => {
+    // Yellow tiene seis videos: idle, tres celebraciones, transformación y
+    // superhéroe. Solo los estados de reposo se repiten en bucle.
+    Object.entries(portalVideos).forEach(([name, video]) => {
+      video.loop = name === "idle" || name === "superhero";
+      video.muted = true;
       video.playsInline = true;
       video.volume = 1;
       video.addEventListener("contextmenu", (event) => event.preventDefault());
@@ -333,7 +331,7 @@
 
   function returnToIdleAfterHappy() {
     if (
-      state.portalState !== "happy" ||
+      !CELEBRATION_KEYS.includes(state.portalState) ||
       state.transforming ||
       state.completed
     ) {
@@ -345,16 +343,43 @@
     showPortal("idle", { restart: true });
   }
 
+  function buildCelebrationQueue() {
+    const queue = [...CELEBRATION_KEYS];
+
+    // Barajado Fisher-Yates: las tres celebraciones aparecen antes de repetir
+    // y nunca se reproduce dos veces seguida la misma.
+    for (let index = queue.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [queue[index], queue[swapIndex]] = [queue[swapIndex], queue[index]];
+    }
+
+    if (queue.length > 1 && queue[0] === state.lastCelebration) {
+      const swapIndex = 1 + Math.floor(Math.random() * (queue.length - 1));
+      [queue[0], queue[swapIndex]] = [queue[swapIndex], queue[0]];
+    }
+
+    return queue;
+  }
+
   function triggerHappy() {
     if (state.transforming || state.completed) return;
 
-    portalVideos.happy.muted = true;
-    portalVideos.happy.loop = false;
-    showPortal("happy", { restart: true });
+    if (!state.celebrationPool.length) {
+      state.celebrationPool = buildCelebrationQueue();
+    }
+
+    const celebration = state.celebrationPool.shift();
+    state.lastCelebration = celebration;
+
+    // Las tres celebraciones se reproducen una sola vez y regresan a idle
+    // cuando termina su propio clip.
+    showPortal(celebration, { restart: true });
   }
 
   function bindHappyEnd() {
-    portalVideos.happy.addEventListener("ended", returnToIdleAfterHappy);
+    CELEBRATION_KEYS.forEach((name) => {
+      portalVideos[name].addEventListener("ended", returnToIdleAfterHappy);
+    });
   }
 
   /* ---------------------------------------------------------
@@ -572,6 +597,7 @@
     toast.classList.remove("is-visible");
 
     portalVideos.superhero.muted = true;
+    state.celebrationPool = [];
     showPortal("idle", { restart: true });
 
     if (withToast) {
@@ -681,7 +707,7 @@
     try {
       const choice = await prompt.userChoice;
       if (choice.outcome === "accepted") {
-        showToast("¡Instalando la experiencia de la Escuela Puki!", 2800);
+        showToast("¡Instalando la experiencia de Preescolar Puki!", 2800);
       } else {
         showToast("Puedes instalarla cuando quieras desde el menú del navegador.", 3000);
       }
@@ -730,18 +756,16 @@
       if (document.hidden) {
         Object.values(portalVideos).forEach((video) => video.pause());
         orbVideos.forEach((video) => video.pause());
-      } else if (!state.completed) {
-        if (state.transforming) {
-          portalVideos.transform.play().catch(() => {});
-        } else {
-          portalVideos.idle.play().catch(() => {});
-        }
-        if (state.activeOrb) {
+      } else {
+        const currentVideo = state.completed
+          ? portalVideos.superhero
+          : portalVideos[state.portalState];
+        if (currentVideo) currentVideo.play().catch(() => {});
+
+        if (state.activeOrb && !state.completed) {
           const video = orbVideos.get(state.activeOrb);
           if (video) video.play().catch(() => {});
         }
-      } else {
-        portalVideos.superhero.play().catch(() => {});
       }
     });
   }
