@@ -91,6 +91,7 @@
     this._initAmbient();
     this._initAudioLifecycle();
     this._initMuteButton();
+    this._initAmbientButton();
     this._initFacade();
     this._initIntro();
     this._initNavigation();
@@ -221,6 +222,71 @@
   };
 
   /* ─────────────────── AUDIO ─────────────────── */
+  App._initAmbientButton = function () {
+    this.ambientPlayButton = document.getElementById("ambient-play");
+    if (!this.ambientPlayButton) return;
+
+    var entry = window.SoundFX && window.SoundFX.ambient && window.SoundFX.ambient.facade;
+    var audio = entry && entry.audio;
+    if (audio) {
+      audio.addEventListener("play", this._syncAmbientButton.bind(this));
+      audio.addEventListener("pause", this._syncAmbientButton.bind(this));
+      audio.addEventListener("volumechange", this._syncAmbientButton.bind(this));
+    }
+
+    this.ambientPlayButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!window.SoundFX) return;
+
+      if (window.SoundFX.muted) {
+        window.SoundFX.setMuted(false);
+        this._syncMuteButton(false);
+        window.SoundFX.playAmbient("facade", 350);
+        this._syncAmbientButton();
+        return;
+      }
+
+      var facade = window.SoundFX.ambient.facade;
+      var playing = window.SoundFX.ambientCurrent === "facade" &&
+        facade && facade.audio && !facade.audio.paused;
+
+      if (playing) {
+        window.SoundFX.pauseAmbient();
+      } else {
+        window.SoundFX.unlock();
+        window.SoundFX.playAmbient("facade", 400);
+      }
+      this._syncAmbientButton();
+    }.bind(this));
+
+    this._syncAmbientButtonVisibility(this.currentState);
+    this._syncAmbientButton();
+  };
+
+  App._syncAmbientButton = function () {
+    if (!this.ambientPlayButton) return;
+    var entry = window.SoundFX && window.SoundFX.ambient && window.SoundFX.ambient.facade;
+    var playing = Boolean(
+      entry && entry.audio && !entry.audio.paused &&
+      window.SoundFX.ambientCurrent === "facade" && !window.SoundFX.muted
+    );
+    this.ambientPlayButton.classList.toggle("is-playing", playing);
+    this.ambientPlayButton.setAttribute(
+      "aria-label",
+      playing ? "Pausar sonido de ambiente" : "Reproducir sonido de ambiente"
+    );
+    this.ambientPlayButton.setAttribute(
+      "title",
+      playing ? "Pausar sonido de ambiente" : "Reproducir sonido de ambiente"
+    );
+  };
+
+  App._syncAmbientButtonVisibility = function (state) {
+    if (!this.ambientPlayButton) return;
+    this.ambientPlayButton.hidden = state !== "facade";
+  };
+
   App._initMuteButton = function () {
     this.muteButton = document.getElementById("app-mute");
     if (!this.muteButton) return;
@@ -237,6 +303,7 @@
   App._syncMuteButton = function (muted) {
     if (!this.muteButton) return;
     this.muteButton.classList.toggle("is-muted", Boolean(muted));
+    if (this._syncAmbientButton) this._syncAmbientButton();
     this.muteButton.setAttribute("aria-pressed", muted ? "true" : "false");
     this.muteButton.setAttribute(
       "aria-label",
@@ -256,7 +323,13 @@
   };
 
   App._initAudioUnlock = function () {
-    var unlock = function () {
+    var unlock = function (event) {
+      // Los controles de sonido gestionan la reproducción por su cuenta:
+      // si el desbloqueo global arrancara la fachada en el pointerdown, el
+      // clic del botón la vería ya sonando y la pausaría.
+      var target = event && event.target;
+      if (target && target.closest && target.closest("#ambient-play, #app-mute")) return;
+
       this.hasUserGestured = true;
       if (window.SoundFX && window.SoundFX.unlock) window.SoundFX.unlock();
       if (!this.audioFocusClaimed || this.audioSilencedByPeer) this._claimAudioFocus();
@@ -644,6 +717,8 @@
 
   /* ─────────────────── CICLO DE VIDA DE ESCENAS ─────────────────── */
   App._enterState = function (state) {
+    if (this._syncAmbientButtonVisibility) this._syncAmbientButtonVisibility(state);
+    if (this._syncAmbientButton) this._syncAmbientButton();
     if (INTERIOR_STATES.indexOf(state) !== -1) this._startInteriorAmbient();
 
     switch (state) {

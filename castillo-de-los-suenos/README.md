@@ -121,6 +121,8 @@ La música ambiental se reproduce directamente con elementos `<audio>` dentro de
 
 El botón circular de sonido de la esquina inferior derecha silencia o reactiva **toda** la aplicación: música ambiental, efectos sintetizados y audio de los videos. Se mantiene visible en todas las escenas.
 
+En la fachada aparece además el botón **Sonido de Ambiente**, justo encima del anterior. Inicia o pausa el tema del castillo y solo se muestra en esa escena.
+
 Los navegadores solo permiten audio con sonido tras un primer gesto del usuario. Por eso, al abrir la fachada puede ser necesario tocar la pantalla una vez; el sistema reintenta la pista pendiente en ese momento y la mantiene durante la entrada. En un kiosco se recomienda iniciar Chrome con `--autoplay-policy=no-user-gesture-required`.
 
 ### Conectar audios externos

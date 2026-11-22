@@ -3200,6 +3200,86 @@ p {
   }
 }
 
+/* Play de la música de fachada: solo aparece en esa escena. */
+.ambient-play {
+  position: fixed;
+  z-index: 10000;
+  right: max(1.4vmin, env(safe-area-inset-right));
+  bottom: calc(max(1.4vmin, env(safe-area-inset-bottom)) + clamp(38px, 4.6vmin, 54px) + 0.8vmin);
+  display: flex;
+  align-items: center;
+  gap: 0.7vmin;
+  height: clamp(32px, 3.9vmin, 46px);
+  padding: 0 1.5vmin 0 0.55vmin;
+  border: 1px solid rgba(255, 235, 193, 0.2);
+  border-radius: 999px;
+  color: rgba(255, 244, 222, 0.7);
+  background: rgba(10, 7, 5, 0.34);
+  box-shadow: 0 0.7vmin 2vmin rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  opacity: 0.62;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: opacity 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.ambient-play:hover,
+.ambient-play:focus-visible {
+  opacity: 1;
+  border-color: rgba(255, 231, 184, 0.62);
+  color: #fff3d8;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.ambient-play:active {
+  transform: scale(0.96);
+}
+
+.ambient-play__icon {
+  display: grid;
+  place-items: center;
+  width: clamp(24px, 2.9vmin, 34px);
+  height: clamp(24px, 2.9vmin, 34px);
+  border: 1px solid rgba(255, 235, 193, 0.28);
+  border-radius: 50%;
+  background: rgba(255, 235, 193, 0.08);
+}
+
+.ambient-play__icon svg {
+  width: 48%;
+  height: 48%;
+}
+
+.ambient-play__pause {
+  display: none;
+}
+
+.ambient-play.is-playing .ambient-play__play {
+  display: none;
+}
+
+.ambient-play.is-playing .ambient-play__pause {
+  display: block;
+}
+
+.ambient-play__label {
+  font-size: clamp(10px, 1.25vmin, 13px);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.ambient-play.is-playing {
+  opacity: 0.78;
+  border-color: rgba(255, 231, 184, 0.42);
+  color: #fff3d8;
+}
+
+.ambient-play[hidden] {
+  display: none;
+}
+
 /* Control global de sonido: discreto y siempre disponible. */
 .app-mute {
   position: fixed;
