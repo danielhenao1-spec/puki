@@ -454,18 +454,12 @@
     }
     this.facadeStarted = true;
 
-    // La música de la fachada se retira suavemente para dejar todo el
-    // protagonismo al audio de la invitación.
+    // La música de fachada se mantiene como fondo durante el video de
+    // entrada. En navegadores que bloquean el autoplay, el primer toque
+    // (este mismo) es el que la inicia; si se retirara de inmediato, nunca
+    // llegaría a escucharse. Se detiene al entrar en la introducción.
     if (window.SoundFX) {
-      window.SoundFX.duckAmbient(0.08, 260);
-      window.setTimeout(function () {
-        // Solo retirar la música de fachada si seguimos en la fachada.
-        // Si el video terminó o se saltó, este temporizador no debe cortar
-        // la música del patio ni la de los talleres.
-        if (this.currentState === "facade" && this.facadeStarted && window.SoundFX) {
-          window.SoundFX.stopAmbient(900);
-        }
-      }.bind(this), 620);
+      window.SoundFX.duckAmbient(0.55, 500);
     }
   };
 

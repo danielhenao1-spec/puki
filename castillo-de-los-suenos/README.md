@@ -36,7 +36,7 @@ También puedes abrir `index.html` directamente en el navegador. Los scripts son
 
 ## Flujo de navegación
 
-1. **Fachada**: el castillo con el video de cortinas pausado en el primer fotograma y su tema musical. Al tocar se reproduce la entrada con sonido, la música de fachada se atenúa y, al terminar, avanza a la introducción.
+1. **Fachada**: el castillo con el video de cortinas pausado en el primer fotograma y su tema musical. Al tocar se reproduce la entrada con sonido, la música de fachada se mantiene atenuada de fondo y, al terminar, avanza a la introducción.
 2. **Introducción**: video a pantalla completa; finaliza automáticamente al patio. Incluye el botón **Saltar introducción**.
 3. **Patio interno**: cuatro zonas táctiles calibrables sobre los letreros.
 4. **Walt Disney**: galería automática de 6 fotos, marco ornamental, pergamino y tres banderines que cambian el relato.
@@ -115,13 +115,13 @@ La experiencia usa dos pistas en bucle:
 | Fachada | `recursos/castillo-vistra-frontal-theme.mp3` | `0.36` |
 | Patio, Walt Disney y talleres | `recursos/castillo-patio-interno-theme.mp3` | `0.40` |
 
-La configuración está en `AMBIENT_TRACKS`, al inicio de `js/app.js`. El tema del patio se mantiene al abrir la historia de Walt Disney y al entrar en cualquier taller. Durante una película o una animación de boceto se atenúa automáticamente y se restaura al pausar o salir. El tema de fachada se retira al comenzar el video de entrada para que se escuche su audio original.
+La configuración está en `AMBIENT_TRACKS`, al inicio de `js/app.js`. El tema del patio se mantiene al abrir la historia de Walt Disney y al entrar en cualquier taller. Durante una película o una animación de boceto se atenúa automáticamente y se restaura al pausar o salir. El tema de fachada se mantiene atenuado durante el video de entrada —así también se escucha cuando el navegador exige un primer toque— y se retira al comenzar la introducción.
 
 La música ambiental se reproduce directamente con elementos `<audio>` dentro del documento, sin enrutarse por Web Audio. Así se evita el silencio que Chrome producía al conectar una pista que ya estaba sonando. La música se detiene por completo al volver a la fachada, al refrescar, al ocultar la pestaña y al cerrar el navegador; al descargar la página se pausan y se reinicia su posición. Además, solo una pestaña/instancia de la experiencia puede sonar a la vez: al abrir otra, la anterior se silencia y la música se reanuda cuando esa instancia vuelve a estar visible o recibe un toque.
 
 El botón circular de sonido de la esquina inferior derecha silencia o reactiva **toda** la aplicación: música ambiental, efectos sintetizados y audio de los videos. Se mantiene visible en todas las escenas.
 
-Los navegadores solo permiten audio con sonido tras un primer gesto del usuario. Por eso, al abrir la fachada puede ser necesario tocar la pantalla una vez; el sistema reintenta la pista pendiente en ese momento. En un kiosco se recomienda iniciar Chrome con `--autoplay-policy=no-user-gesture-required`.
+Los navegadores solo permiten audio con sonido tras un primer gesto del usuario. Por eso, al abrir la fachada puede ser necesario tocar la pantalla una vez; el sistema reintenta la pista pendiente en ese momento y la mantiene durante la entrada. En un kiosco se recomienda iniciar Chrome con `--autoplay-policy=no-user-gesture-required`.
 
 ### Conectar audios externos
 
