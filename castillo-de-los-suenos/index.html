@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#08060d">
+  <meta name="description" content="El Castillo de los Sueños: una experiencia interactiva inspirada en Walt Disney y sus talleres de música, video y dibujo.">
+  <title>El Castillo de los Sueños · Talleres de Walt Disney</title>
+  <link rel="icon" href="./recursos/banderin-azul.webp">
+  <link rel="preload" as="image" href="./recursos/castillo-vista-frontal.webp">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <div id="app" class="app" data-state="facade" data-debug="false">
+
+    <div class="boot-screen" id="boot-screen" aria-hidden="true">
+      <div class="boot-mark" aria-hidden="true">
+        <span class="boot-mark__star">✦</span>
+        <span class="boot-mark__ring"></span>
+      </div>
+      <p class="boot-title">El Castillo de los Sueños</p>
+      <p class="boot-sub">Preparando la magia…</p>
+    </div>
+
+    <div class="scene-blur-layer" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 1 · FACHADA DEL CASTILLO
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--facade is-active" data-scene="facade" aria-hidden="false" aria-label="Fachada del castillo">
+      <div class="scene-blur" style="background-image:url('./recursos/castillo-vista-frontal.webp')"></div>
+      <div class="stage">
+        <img class="stage-bg" src="./recursos/castillo-vista-frontal.webp" alt="" draggable="false" fetchpriority="high">
+        <div class="stage-vignette" aria-hidden="true"></div>
+        <div class="facade-glow" aria-hidden="true"></div>
+
+        <header class="facade-masthead">
+          <p class="eyebrow"><span class="eyebrow__line"></span>Una experiencia interactiva</p>
+          <h1>El Castillo<br><em>de los Sueños</em></h1>
+          <p class="facade-masthead__sub">Acompaña a <span class="facade-masthead__name">Alaia</span> en una aventura mágica por los talleres creativos de Walt Disney</p>
+        </header>
+
+        <div class="facade-portal" aria-hidden="true">
+          <video id="facade-video" class="facade-video" src="./recursos/entrada-personaje-saludo.mp4"
+                 playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
+          <div class="facade-portal__glass"></div>
+        </div>
+
+        <button id="facade-enter" class="facade-action" type="button" aria-label="Tocar para entrar al castillo">
+          <span class="facade-action__orb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>
+          </span>
+          <span class="facade-action__copy">
+            <span class="facade-action__title">Toca para entrar</span>
+            <span class="facade-action__sub">La magia te espera tras las cortinas</span>
+          </span>
+        </button>
+
+        <div class="facade-footer">
+          <span class="facade-footer__dot" aria-hidden="true"></span>
+          <span>Experiencia táctil · Sonido inmersivo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 2 · INTRO A PANTALLA COMPLETA
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--intro" data-scene="intro" aria-hidden="true" aria-label="Introducción">
+      <video id="intro-video" class="intro-video" src="./recursos/intro.mp4"
+             playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
+      <div class="intro-vignette" aria-hidden="true"></div>
+      <div class="intro-edge" aria-hidden="true"></div>
+
+      <div class="intro-loader" id="intro-loader" aria-hidden="true">
+        <span class="loader-ring"></span>
+        <span>Cargando la historia…</span>
+      </div>
+
+      <button id="intro-play" class="intro-play" type="button" hidden>
+        <span class="intro-play__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </span>
+        <span>Reproducir introducción</span>
+      </button>
+
+      <div class="intro-topbar">
+        <span class="intro-brand">PUKI <i>presenta</i></span>
+        <button id="skip-intro" class="skip-button" type="button">
+          Saltar introducción
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="intro-progress" aria-hidden="true"><span id="intro-progress-bar"></span></div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 3 · PATIO INTERNO
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--patio" data-scene="patio" aria-hidden="true" aria-label="Patio interno del castillo">
+      <div class="scene-blur" style="background-image:url('./recursos/castillo-patio_interno.webp')"></div>
+      <div class="stage">
+        <img class="stage-bg" src="./recursos/castillo-patio_interno.webp" alt="" draggable="false">
+        <div class="stage-vignette" aria-hidden="true"></div>
+
+        <header class="patio-header">
+          <div class="patio-brand">
+            <span class="patio-brand__crest" aria-hidden="true">✦</span>
+            <span class="patio-brand__copy">
+              <span class="eyebrow"><span class="eyebrow__line"></span>El patio de los talleres</span>
+              <strong>Elige tu próxima aventura</strong>
+            </span>
+          </div>
+          <p class="patio-header__note">Tres puertas. Mil historias por crear.</p>
+        </header>
+
+        <!-- Zonas calibrables: edita left / top / width / height en css/styles.css -->
+        <button class="hotspot hotspot--music" type="button" data-open="musica" data-debug-label="Taller de Música">
+          <span class="hotspot__aura" aria-hidden="true"></span>
+          <span class="hotspot__badge">
+            <span class="hotspot__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>
+            </span>
+            <span class="hotspot__text">Taller de Música<small>Ritmo mágico</small></span>
+          </span>
+        </button>
+
+        <button class="hotspot hotspot--drawing" type="button" data-open="dibujo" data-debug-label="Taller de Dibujo">
+          <span class="hotspot__aura" aria-hidden="true"></span>
+          <span class="hotspot__badge">
+            <span class="hotspot__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3.5l5 5L8 21H3v-5z"/><path d="M13.5 5.5l5 5"/><path d="M6 15l3 3"/></svg>
+            </span>
+            <span class="hotspot__text">Taller de Dibujo<small>Trazo mágico</small></span>
+          </span>
+        </button>
+
+        <button class="hotspot hotspot--video" type="button" data-open="video" data-debug-label="Taller de Video">
+          <span class="hotspot__aura" aria-hidden="true"></span>
+          <span class="hotspot__badge">
+            <span class="hotspot__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="1.5"/><path d="M16 10l5-2v8l-5-2"/></svg>
+            </span>
+            <span class="hotspot__text">Taller de Video<small>Cine mágico</small></span>
+          </span>
+        </button>
+
+        <button class="hotspot hotspot--wd" type="button" data-open="modal-wd" data-debug-label="Walt Disney">
+          <span class="hotspot__aura" aria-hidden="true"></span>
+          <span class="hotspot__badge">
+            <span class="hotspot__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 5.2 5.6.7-4.2 4 1.1 5.6L12 15.8l-4.9 2.7 1.1-5.6-4.2-4 5.6-.7z"/></svg>
+            </span>
+            <span class="hotspot__text">Walt Disney<small>Su historia</small></span>
+          </span>
+        </button>
+
+        <div class="patio-tip">
+          <span class="patio-tip__spark" aria-hidden="true">✦</span>
+          <span>Toca los letreros para descubrir cada taller</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 4 · WALT DISNEY
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--wd" data-scene="modal-wd" aria-hidden="true" aria-label="La historia de Walt Disney">
+      <div class="scene-blur" style="background-image:url('./recursos/modal-wd-fondo.webp')"></div>
+      <div class="stage">
+        <img class="stage-bg" src="./recursos/modal-wd-fondo.webp" alt="" draggable="false">
+        <div class="wd-veil" aria-hidden="true"></div>
+
+        <button class="round-button round-button--back" type="button" data-go="patio" aria-label="Volver al patio interno">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>
+        </button>
+
+        <header class="wd-header">
+          <p class="eyebrow"><span class="eyebrow__line"></span>El hombre detrás de la magia</p>
+          <h1>Walt Disney</h1>
+          <p>Un cuaderno, un ratón y un castillo de sueños.</p>
+        </header>
+
+        <div class="wd-photo-panel">
+          <div class="wd-frame">
+            <div class="wd-photo-window" id="wd-slider" aria-live="polite">
+              <img class="wd-slide is-active" src="./recursos/wd-1.jpg" alt="Walt Disney, retrato 1" draggable="false">
+              <img class="wd-slide" src="./recursos/wd-2.jpg" alt="Walt Disney, retrato 2" draggable="false" loading="lazy">
+              <img class="wd-slide" src="./recursos/wd-3.jpg" alt="Walt Disney, retrato 3" draggable="false" loading="lazy">
+              <img class="wd-slide" src="./recursos/wd-4.jpg" alt="Walt Disney, retrato 4" draggable="false" loading="lazy">
+              <img class="wd-slide" src="./recursos/wd-5.jpg" alt="Walt Disney, retrato 5" draggable="false" loading="lazy">
+              <img class="wd-slide" src="./recursos/wd-6.jpg" alt="Walt Disney, retrato 6" draggable="false" loading="lazy">
+            </div>
+            <img class="wd-frame-img" src="./recursos/modal-wd-marco.webp" alt="" draggable="false" aria-hidden="true">
+            <span class="wd-frame-shine" aria-hidden="true"></span>
+          </div>
+
+          <div class="wd-photo-controls">
+            <button class="icon-button icon-button--small" id="wd-prev" type="button" aria-label="Foto anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="wd-dots" id="wd-dots" role="tablist" aria-label="Galería de Walt Disney"></div>
+            <button class="icon-button icon-button--small" id="wd-next" type="button" aria-label="Foto siguiente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <p class="wd-photo-caption">Walt Disney · 1901 — 1966</p>
+        </div>
+
+        <div class="wd-scroll" id="wd-panel" role="tabpanel" aria-labelledby="wd-tab-0">
+          <img class="wd-scroll__bg" src="./recursos/modal-wd-pergamino.webp" alt="" draggable="false" aria-hidden="true">
+          <div class="wd-scroll__content">
+            <span class="wd-scroll__kicker">Walt Disney</span>
+            <span class="wd-scroll__divider" aria-hidden="true"><i>✦</i></span>
+            <h2 id="wd-panel-title">El Niño que Amaba Dibujar</h2>
+            <p id="wd-panel-text">Antes de construir castillos mágicos, Walt Disney era un niño curioso al que le encantaba dibujar animales en su cuaderno y soñar con historias donde los lápices cobraban vida.</p>
+            <span class="wd-scroll__signature">— Walt Disney</span>
+          </div>
+        </div>
+
+        <div class="wd-tabs" role="tablist" aria-label="Etapas de la historia de Walt Disney" aria-orientation="vertical">
+          <button class="wd-tab wd-tab--blue is-active" id="wd-tab-0" type="button" role="tab" aria-selected="true" aria-controls="wd-panel" tabindex="0" data-tab="0">
+            <img src="./recursos/banderin-azul.webp" alt="" draggable="false" aria-hidden="true">
+            <span class="wd-tab__label"><small>01</small>Los Inicios</span>
+          </button>
+          <button class="wd-tab wd-tab--red" id="wd-tab-1" type="button" role="tab" aria-selected="false" aria-controls="wd-panel" tabindex="-1" data-tab="1">
+            <img src="./recursos/banderin-rojo.webp" alt="" draggable="false" aria-hidden="true">
+            <span class="wd-tab__label"><small>02</small>La Innovación</span>
+          </button>
+          <button class="wd-tab wd-tab--purple" id="wd-tab-2" type="button" role="tab" aria-selected="false" aria-controls="wd-panel" tabindex="-1" data-tab="2">
+            <img src="./recursos/banderin-purpura.webp" alt="" draggable="false" aria-hidden="true">
+            <span class="wd-tab__label"><small>03</small>El Legado</span>
+          </button>
+        </div>
+
+        <p class="wd-hint">
+          <span aria-hidden="true">✦</span>
+          Descubre las tres etapas de su historia
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 5 · TALLER DE MÚSICA
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--workshop scene--musica" data-scene="musica" aria-hidden="true" aria-label="Taller de Música">
+      <div class="scene-blur" style="background-image:url('./recursos/taller-de-musica.webp')"></div>
+      <div class="stage">
+        <img class="stage-bg" src="./recursos/taller-de-musica.webp" alt="" draggable="false">
+        <div class="stage-vignette" aria-hidden="true"></div>
+
+        <div class="workshop-topbar">
+          <button class="round-button round-button--back" type="button" data-go="patio" aria-label="Volver al patio interno">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>
+          </button>
+          <div class="workshop-title">
+            <p class="eyebrow"><span class="eyebrow__line"></span>Taller de Música</p>
+            <h1>La melodía del cine</h1>
+          </div>
+          <p class="workshop-instruction">Toca los instrumentos para musicalizar la escena</p>
+        </div>
+
+        <div class="portrait-portal portal-music" aria-hidden="true">
+          <video id="musica-personaje" class="portal-media" src="./recursos/taller-de-musica-personaje.mp4"
+                 loop muted playsinline preload="metadata"></video>
+          <span class="portal-glass"></span>
+        </div>
+
+        <div class="tv-video-underlay" aria-hidden="true">
+          <video id="musica-tv" class="tv-video" src="./recursos/taller-de-musica-fondotv.mp4"
+                 loop muted playsinline preload="metadata"></video>
+        </div>
+        <div class="tv-screen" aria-hidden="true">
+          <span class="tv-glare"></span>
+          <span class="tv-scanlines"></span>
+        </div>
+
+        <div class="instrument-zone instrument-zone--xylophone">
+          <button class="instrument-hit" type="button" data-instrument="xylophone" data-debug-label="Xilófono" aria-label="Tocar el xilófono">
+            <span class="instrument-label"><span aria-hidden="true">♪</span>Xilófono</span>
+          </button>
+        </div>
+        <div class="instrument-zone instrument-zone--cymbal">
+          <button class="instrument-hit" type="button" data-instrument="cymbal" data-debug-label="Címbalo" aria-label="Tocar el címbalo">
+            <span class="instrument-label"><span aria-hidden="true">✧</span>Címbalo</span>
+          </button>
+        </div>
+        <div class="instrument-zone instrument-zone--trumpet">
+          <button class="instrument-hit" type="button" data-instrument="trumpet" data-debug-label="Trompeta" aria-label="Tocar la trompeta">
+            <span class="instrument-label"><span aria-hidden="true">♫</span>Trompeta</span>
+          </button>
+        </div>
+        <div class="instrument-zone instrument-zone--drum">
+          <button class="instrument-hit" type="button" data-instrument="drum" data-debug-label="Tambor" aria-label="Tocar el tambor">
+            <span class="instrument-label"><span aria-hidden="true">◉</span>Tambor</span>
+          </button>
+        </div>
+        <div class="instrument-zone instrument-zone--bell">
+          <button class="instrument-hit" type="button" data-instrument="bell" data-debug-label="Campana" aria-label="Tocar la campana">
+            <span class="instrument-label"><span aria-hidden="true">✦</span>Campana</span>
+          </button>
+        </div>
+
+        <div class="sound-wave" id="music-wave" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <p class="sr-only" id="music-live" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 6 · TALLER DE VIDEO
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--workshop scene--video" data-scene="video" aria-hidden="true" aria-label="Taller de Video">
+      <div class="scene-blur" style="background-image:url('./recursos/taller-de-video.webp')"></div>
+      <div class="stage">
+        <img class="stage-bg" src="./recursos/taller-de-video.webp" alt="" draggable="false">
+        <div class="stage-vignette" aria-hidden="true"></div>
+
+        <div class="workshop-topbar">
+          <button class="round-button round-button--back" type="button" data-go="patio" aria-label="Volver al patio interno">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>
+          </button>
+          <div class="workshop-title">
+            <p class="eyebrow"><span class="eyebrow__line"></span>Taller de Video</p>
+            <h1>La magia en movimiento</h1>
+          </div>
+          <p class="workshop-instruction">Elige un rollo y enciende el proyector</p>
+        </div>
+
+        <div class="portrait-portal portal-video" aria-hidden="true">
+          <video id="video-personaje" class="portal-media" src="./recursos/taller-de-video_personaje.mp4"
+                 loop muted playsinline preload="metadata"></video>
+          <span class="portal-glass"></span>
+        </div>
+
+        <div class="cinema-now" id="cinema-now">
+          <span class="cinema-now__reel" aria-hidden="true">✦</span>
+          <span class="cinema-now__copy">
+            <small id="cinema-caption-label">Rollos de película</small>
+            <strong id="cinema-caption-title">Selecciona una historia</strong>
+          </span>
+        </div>
+
+        <div class="cinema-screen" id="cinema-screen">
+          <video id="cinema-screen-video" playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
+          <div class="cinema-flicker" aria-hidden="true"></div>
+          <div class="cinema-scanlines" aria-hidden="true"></div>
+
+          <div class="cinema-idle" id="cinema-idle">
+            <span class="cinema-idle__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="5.5" r="1.6"/><circle cx="12" cy="18.5" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></svg>
+            </span>
+            <span class="cinema-idle__title">La función está por comenzar</span>
+            <span class="cinema-idle__sub">Toca uno de los cuatro rollos</span>
+          </div>
+
+          <button class="cinema-big-play" id="cinema-big-play" type="button" aria-label="Reproducir película" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+          </button>
+
+          <div class="cinema-ui" id="cinema-ui">
+            <div class="cinema-controls">
+              <button class="cinema-control" id="cinema-toggle" type="button" aria-label="Reproducir" disabled>
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              </button>
+              <div class="cinema-timeline">
+                <input id="cinema-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Avanzar por la película" disabled>
+                <span class="cinema-time" id="cinema-time">00:00 / 00:00</span>
+              </div>
+              <button class="cinema-control" id="cinema-mute" type="button" aria-label="Silenciar película" disabled>
+                <svg class="icon-volume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9.5a4 4 0 010 5"/><path d="M19.5 7a7.5 7.5 0 010 10"/></svg>
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6"/><path d="M22 9l-5 6"/></svg>
+              </button>
+            </div>
+            <div class="cinema-loading" id="cinema-loading" hidden>
+              <span class="loader-ring"></span>
+              <span>Enhebrando la película…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="film-reels" role="group" aria-label="Rollos de película">
+          <button class="film-reel film-reel--1" type="button" data-film="0" aria-pressed="false" aria-label="Rollo 1: Dumbo">
+            <span class="film-reel__badge" aria-hidden="true">1</span>
+            <span class="film-reel__label">Dumbo</span>
+          </button>
+          <button class="film-reel film-reel--2" type="button" data-film="1" aria-pressed="false" aria-label="Rollo 2: Pinocho">
+            <span class="film-reel__badge" aria-hidden="true">2</span>
+            <span class="film-reel__label">Pinocho</span>
+          </button>
+          <button class="film-reel film-reel--3" type="button" data-film="2" aria-pressed="false" aria-label="Rollo 3: Toy Story">
+            <span class="film-reel__badge" aria-hidden="true">3</span>
+            <span class="film-reel__label">Toy Story</span>
+          </button>
+          <button class="film-reel film-reel--4" type="button" data-film="3" aria-pressed="false" aria-label="Rollo 4: Lilo y Stitch">
+            <span class="film-reel__badge" aria-hidden="true">4</span>
+            <span class="film-reel__label" style="left: 75%;">Lilo &amp; Stitch</span>
+          </button>
+        </div>
+
+        <div class="projector-glow" aria-hidden="true"></div>
+        <p class="sr-only" id="video-live" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 7 · TALLER DE DIBUJO
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--workshop scene--dibujo" data-scene="dibujo" aria-hidden="true" aria-label="Taller de Dibujo">
+      <div class="scene-blur" style="background-image:url('./recursos/taller-de-dibujo.webp')"></div>
+      <div class="stage">
+        <img class="stage-bg" src="./recursos/taller-de-dibujo.webp" alt="" draggable="false">
+        <div class="stage-vignette" aria-hidden="true"></div>
+
+        <div class="workshop-topbar">
+          <button class="round-button round-button--back" type="button" data-go="patio" aria-label="Volver al patio interno">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>
+          </button>
+          <div class="workshop-title">
+            <p class="eyebrow"><span class="eyebrow__line"></span>Taller de Dibujo</p>
+            <h1>Dar vida a un trazo</h1>
+          </div>
+          <p class="workshop-instruction">Acércate a la mesa y descubre los bocetos</p>
+        </div>
+
+        <div class="portrait-portal portal-drawing" aria-hidden="true">
+          <video id="dibujo-personaje" class="portal-media" src="./recursos/taller-de-dibujo-personaje.mp4"
+                 loop muted playsinline preload="metadata"></video>
+          <span class="portal-glass"></span>
+        </div>
+
+        <button class="desk-hotspot" id="desk-open" type="button" data-debug-label="Mesa de dibujo" aria-label="Acercarse a la mesa de dibujo">
+          <span class="desk-hotspot__ring" aria-hidden="true"></span>
+          <span class="desk-hotspot__badge">
+            <span class="desk-hotspot__icon" aria-hidden="true">✦</span>
+            <span>Acércate a la mesa<small>Toca para descubrir los bocetos</small></span>
+          </span>
+        </button>
+
+        <p class="floating-note" aria-hidden="true">Los dibujos cobran vida…</p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ESTADO 7.2 · ZOOM A LA MESA DE DIBUJO
+         ══════════════════════════════════════════════════════════ -->
+    <section class="scene scene--mesa" data-scene="dibujo-mesa" aria-hidden="true" aria-label="Mesa de dibujo con bocetos mágicos">
+      <div class="scene-blur" style="background-image:url('./recursos/taller-de-dibujo-mesa-2.webp')"></div>
+      <div class="stage" id="mesa-stage">
+        <img class="stage-bg" src="./recursos/taller-de-dibujo-mesa-2.webp" alt="" draggable="false">
+        <div class="mesa-vignette" aria-hidden="true"></div>
+
+        <div class="workshop-topbar mesa-topbar">
+          <button class="round-button round-button--back" type="button" data-go="dibujo" aria-label="Volver al Taller de Dibujo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>
+          </button>
+          <div class="workshop-title">
+            <p class="eyebrow"><span class="eyebrow__line"></span>La mesa mágica</p>
+            <h1>Bocetos que cobran vida</h1>
+          </div>
+          <p class="workshop-instruction">Arrastra el pincel mágico sobre el dibujo</p>
+        </div>
+
+        <div class="sketch-wrap">
+          <div class="sketch-stage" id="sketch-stage" tabindex="0" role="button" aria-label="Boceto actual. Toca o arrastra el pincel mágico sobre él para animarlo.">
+            <video id="sketch-anim-video" class="sketch-anim" playsinline preload="auto" muted aria-hidden="true"></video>
+            <img id="sketch-still-img" class="sketch-still is-active" src="./recursos/caricatura-1-boceto.jpg" alt="Boceto de caricatura 1" draggable="false">
+            <img id="sketch-still-next" class="sketch-still" alt="" draggable="false" aria-hidden="true">
+            <canvas id="sketch-freeze" class="sketch-freeze" width="544" height="768" aria-hidden="true"></canvas>
+            <span class="sketch-glow" aria-hidden="true"></span>
+            <span class="sketch-paper-grain" aria-hidden="true"></span>
+          </div>
+          <div class="sketch-sparkles" id="sketch-sparkles" aria-hidden="true"></div>
+        </div>
+
+        <button class="sketch-arrow sketch-arrow--prev" id="sketch-prev" type="button" aria-label="Boceto anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="sketch-arrow sketch-arrow--next" id="sketch-next" type="button" aria-label="Boceto siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <div class="sketch-meta">
+          <span class="sketch-meta__count" id="sketch-count">Boceto 1 de 5</span>
+          <div class="sketch-dots" id="sketch-dots" aria-hidden="true">
+            <span class="is-active"></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="sketch-meta__hint" id="sketch-hint">Pincel listo ✦</span>
+        </div>
+
+        <button class="magic-brush" id="magic-brush" type="button" aria-label="Pincel mágico. Arrástralo hasta el boceto o pulsa para animarlo.">
+          <img src="./recursos/pincel-magico.webp" alt="" draggable="false">
+          <span class="magic-brush__spark" aria-hidden="true">✦</span>
+        </button>
+
+        <div class="brush-instruction">
+          <span class="brush-instruction__line" aria-hidden="true"></span>
+          Arrastra el pincel hasta el papel
+          <span class="brush-instruction__line" aria-hidden="true"></span>
+        </div>
+
+        <p class="sr-only" id="drawing-live" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <button id="app-mute" class="app-mute" type="button" aria-label="Silenciar toda la aplicación" aria-pressed="false" title="Silenciar todo">
+      <svg class="app-mute__on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9.5a4 4 0 010 5"/><path d="M19.5 7a7.5 7.5 0 010 10"/></svg>
+      <svg class="app-mute__off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6"/><path d="M22 9l-5 6"/></svg>
+    </button>
+
+    <div class="transition-veil" id="transition-veil" aria-hidden="true"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <p class="sr-only" id="app-live" aria-live="polite"></p>
+
+    <div class="debug-panel" id="debug-panel" hidden>
+      <strong>Modo calibración</strong>
+      <span>Pulsa <kbd>H</kbd> o añade <code>?debug=1</code> para mostrar/ocultar zonas.</span>
+      <span>Edita las posiciones en <code>css/styles.css</code>.</span>
+    </div>
+  </div>
+
+  <noscript>Esta experiencia necesita JavaScript activado.</noscript>
+
+  <script src="./js/sound-fx.js" defer></script>
+  <script src="./js/wd-modal.js" defer></script>
+  <script src="./js/workshops.js" defer></script>
+  <script src="./js/drawing-desk.js" defer></script>
+  <script src="./js/app.js" defer></script>
+</body>
+</html>

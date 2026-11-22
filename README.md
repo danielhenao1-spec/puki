@@ -43,9 +43,17 @@ Pantalla inmersiva para el **Día de la Alimentación**. La cocina ilustrada con
 - [Instrucciones y estructura](dia-de-la-alimentacion/README.md)
 - **URL de producción:** https://puki-blue.vercel.app/dia-de-la-alimentacion/
 
+## El Castillo de los Sueños
+
+Experiencia narrativa e interactiva inspirada en Walt Disney y sus talleres creativos. La fachada del castillo da paso al patio interno, a la historia de Walt Disney y a los talleres de música, video y dibujo. Está pensada para pantallas táctiles escolares y también funciona con ratón y teclado.
+
+- [Aplicación web](castillo-de-los-suenos/index.html)
+- [Instrucciones y estructura](castillo-de-los-suenos/README.md)
+- **URL de producción:** https://puki-blue.vercel.app/castillo-de-los-suenos/
+
 ## Despliegue en Vercel
 
-Los cuatro proyectos son sitios estáticos que no requieren compilación. El repositorio está conectado a Vercel y cada push a la rama `main` actualiza el despliegue automáticamente.
+Los cinco proyectos son sitios estáticos que no requieren compilación. El repositorio está conectado a Vercel y cada push a la rama `main` actualiza el despliegue automáticamente.
 
 La configuración compartida de Vercel está en [vercel.json](vercel.json). La Cocina Mágica y Día Mundial de la Amabilidad añaden cabeceras específicas para sus service workers y manifests; sus recursos de desarrollo y fuentes originales se excluyen del deploy mediante [.vercelignore](.vercelignore).
 
@@ -55,9 +63,10 @@ La configuración compartida de Vercel está en [vercel.json](vercel.json). La C
 - **Meet The Masters:** abre `meet-the-masters/index.html` en un navegador moderno.
 - **Día Mundial de la Amabilidad:** dentro de `dia-mundial-amabilidad/`, ejecuta `node servidor.mjs --open` o abre `iniciar.cmd`.
 - **Día de la Alimentación:** abre `dia-de-la-alimentacion/index.html` en un navegador moderno.
+- **El Castillo de los Sueños:** abre `castillo-de-los-suenos/index.html` o ejecuta `node servidor-local.js` dentro de `castillo-de-los-suenos/`.
 
-Las cuatro aplicaciones están pensadas para pantalla horizontal.
+Las cinco aplicaciones están pensadas para pantalla horizontal.
 
 ## Proyecto
 
-Preescolar Puki · Proyectos escolares **La Cocina Mágica de Yellow**, **Meet The Masters**, **Día Mundial de la Amabilidad** y **Día de la Alimentación**.
+Preescolar Puki · Proyectos escolares **La Cocina Mágica de Yellow**, **Meet The Masters**, **Día Mundial de la Amabilidad**, **Día de la Alimentación** y **El Castillo de los Sueños**.
