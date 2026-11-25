@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#161022">
+  <meta name="description" content="El Árbol de la Gratitud: actividad interactiva de Día de Gracias para el salón de clase.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232a1c33'/%3E%3Cpath d='M50 12C31 14 15 25 16 41c0 5 4 8 9 8 16-1 25-17 25-37Z' fill='%23ffc46b'/%3E%3Cpath d='M18 52c5-13 13-22 27-30' fill='none' stroke='%237a4a14' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>Día de Gracias · El Árbol de la Gratitud</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="scene-wrap">
+    <main class="stage" id="stage" aria-label="Escena del árbol de la gratitud">
+      <img class="scene-bg" id="sceneBg" src="fondo.webp" alt="Jardín al crepúsculo con un árbol joven iluminado, un buzón de Día de Gracias y una casa con un comedor cálido" draggable="false">
+      <canvas class="fireflies" id="fireflies" aria-hidden="true"></canvas>
+
+      <!-- Hilos mágicos -->
+      <svg class="threads" id="threads" viewBox="0 0 1000 562.5" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="threadBlur" x="-30%" y="-60%" width="160%" height="220%">
+            <feGaussianBlur stdDeviation="3.4"></feGaussianBlur>
+          </filter>
+          <filter id="beadGlow" x="-150%" y="-150%" width="400%" height="400%">
+            <feGaussianBlur stdDeviation="2.2" result="b"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="b"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+          <radialGradient id="pulseGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fffdf2" stop-opacity="1"></stop>
+            <stop offset="38%" stop-color="#ffe1a0" stop-opacity=".95"></stop>
+            <stop offset="100%" stop-color="#ffb94f" stop-opacity="0"></stop>
+          </radialGradient>
+          <radialGradient id="heartGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fffdf0"></stop>
+            <stop offset="45%" stop-color="#ffd98d" stop-opacity=".9"></stop>
+            <stop offset="100%" stop-color="#ffb347" stop-opacity="0"></stop>
+          </radialGradient>
+        </defs>
+
+        <g class="thread" data-thread="agradecer">
+          <path class="thread-halo" d="M140 90 C120 160 210 215 300 206 S 430 240 496 253"></path>
+          <path class="thread-core" d="M140 90 C120 160 210 215 300 206 S 430 240 496 253"></path>
+        </g>
+        <g class="thread" data-thread="amabilidad">
+          <path class="thread-halo" d="M780 90 C800 160 700 215 640 206 S 540 235 496 253"></path>
+          <path class="thread-core" d="M780 90 C800 160 700 215 640 206 S 540 235 496 253"></path>
+        </g>
+        <g class="thread" data-thread="compartir">
+          <path class="thread-halo" d="M680 472.5 C700 410 640 345 596 322 S 530 286 496 253"></path>
+          <path class="thread-core" d="M680 472.5 C700 410 640 345 596 322 S 530 286 496 253"></path>
+        </g>
+
+        <g class="thread-beads">
+          <circle class="start-bead" cx="140" cy="90" r="3.1"></circle>
+          <circle class="start-bead" cx="780" cy="90" r="3.1"></circle>
+          <circle class="start-bead" cx="680" cy="472.5" r="3.1"></circle>
+          <circle class="heart-aura" cx="496" cy="253" r="26"></circle>
+          <circle class="heart-bead" cx="496" cy="253" r="4.6"></circle>
+        </g>
+
+        <circle class="energy-pulse" id="energyPulse" cx="140" cy="90" r="8" fill="url(#pulseGrad)" opacity="0"></circle>
+      </svg>
+
+      <!-- Hojas nacidas en el árbol -->
+      <div class="leaf-layer" id="leafLayer"></div>
+
+      <!-- Letrero interactivo "DIA DE GRACIAS" -->
+      <button class="sign-hotspot" id="signBtn" type="button" aria-haspopup="dialog" aria-controls="signModal" aria-label="Abrir la explicación del Día de Gracias" title="Día de Gracias">
+        <span class="sign-spark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.6l2.5 7.4 7.4 2.5-7.4 2.5L12 21.4l-2.5-7.4L2.1 11.5l7.4-2.5L12 1.6Z"></path></svg>
+        </span>
+        <span class="sign-hint" aria-hidden="true">Toca el letrero</span>
+      </button>
+
+      <!-- Nodos de calibración -->
+      <div class="calib-layer" id="calibLayer" aria-hidden="true"></div>
+
+      <!-- Botones de categorías con hilos -->
+      <section class="category-buttons" id="categoryButtons" aria-label="Categorías de gratitud">
+        <div class="cat-slot" style="--x:14%; --y:16%">
+          <div class="cat-float" style="--bob-delay:0s">
+            <button class="cat-btn" type="button" data-cat="agradecer" aria-label="Agradecer: añadir una hoja de gratitud">
+              <span class="cat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4.2"></circle>
+                  <path d="M12 2.7v2.5M12 18.8v2.5M2.7 12h2.5M18.8 12h2.5M5.4 5.4l1.8 1.8M16.8 16.8l1.8 1.8M18.6 5.4l-1.8 1.8M7.2 16.8l-1.8 1.8"></path>
+                </svg>
+              </span>
+              <span class="cat-text">
+                <span class="cat-name">Agradecer</span>
+                <span class="cat-meta" data-meta="agradecer">0 / 10</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cat-slot" style="--x:78%; --y:16%">
+          <div class="cat-float" style="--bob-delay:-1.9s">
+            <button class="cat-btn" type="button" data-cat="amabilidad" aria-label="Gesto de Amabilidad: añadir una hoja de amabilidad">
+              <span class="cat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20.2s-7.4-4.6-7.4-9.6A4.2 4.2 0 0 1 12 7.4a4.2 4.2 0 0 1 7.4 3.2c0 5-7.4 9.6-7.4 9.6Z"></path>
+                  <path d="M18.6 3.1l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7.7-1.7Z"></path>
+                </svg>
+              </span>
+              <span class="cat-text">
+                <span class="cat-name">Gesto de Amabilidad</span>
+                <span class="cat-meta" data-meta="amabilidad">0 / 10</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cat-slot" style="--x:68%; --y:84%">
+          <div class="cat-float" style="--bob-delay:-3.4s">
+            <button class="cat-btn" type="button" data-cat="compartir" aria-label="Compartir: añadir una hoja para compartir">
+              <span class="cat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4.2 10.4h15.6v9.1H4.2z"></path>
+                  <path d="M3.2 7.1h17.6v3.3H3.2zM12 7.1v12.4M12 7.1S10.6 2.9 8.5 3c-1.8.1-2.4 2.6-.4 3.6 1.1.5 3.9.5 3.9.5Zm0 0s1.4-4.2 3.5-4.1c1.8.1 2.4 2.6.4 3.6-1.1.5-3.9.5-3.9.5Z"></path>
+                </svg>
+              </span>
+              <span class="cat-text">
+                <span class="cat-name">Compartir</span>
+                <span class="cat-meta" data-meta="compartir">0 / 10</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Controles discretos -->
+      <div class="hud" aria-label="Controles de la actividad">
+        <button class="hud-btn" id="resetBtn" type="button" title="Reiniciar árbol" aria-label="Reiniciar el árbol y empezar una nueva sesión">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 11.2a8.2 8.2 0 1 1-2.5-6.3"></path>
+            <path d="M20 3.4v5.2h-5.2"></path>
+          </svg>
+        </button>
+        <button class="hud-btn" id="calibBtn" type="button" title="Calibrar hojas (Ctrl+E)" aria-label="Activar modo calibración de hojas" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.1"></circle>
+            <path d="M19.3 14.6a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 8.8 19.3a1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.88 1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.7 8.8a1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.88.34H9.1a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.88v.09a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.56 1.03Z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Música ambiental -->
+      <div class="audio-pill" id="audioPill">
+        <button class="audio-play" id="playBtn" type="button" aria-label="Reproducir música ambiental" aria-pressed="false">
+          <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.2 4.9c0-.9 1-1.4 1.7-.9l9.1 6.2c.7.5.7 1.5 0 2l-9.1 6.2c-.7.5-1.7 0-1.7-.9V4.9Z"></path></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.2" y="4.6" width="4" height="14.8" rx="1.3"></rect><rect x="13.8" y="4.6" width="4" height="14.8" rx="1.3"></rect></svg>
+        </button>
+        <div class="audio-slider">
+          <span class="audio-label" aria-hidden="true">Música</span>
+          <input type="range" id="volume" min="0" max="1" step="0.05" value="0.4" aria-label="Volumen de la música ambiental">
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Panel de calibración -->
+  <aside class="calib-panel" id="calibPanel" aria-label="Panel de calibración de hojas" hidden>
+    <div class="calib-head">
+      <strong class="calib-title">Calibración de hojas</strong>
+      <span class="calib-hint">Arrastra la hoja &middot; rueda del ratón para rotar &middot; modelo y color fijados &middot; Ctrl+E para salir</span>
+    </div>
+    <div class="calib-controls">
+      <span class="calib-node-label" id="calibNodeLabel">Hoja #1</span>
+      <span class="calib-pos" id="calibPos">x 0.0 &middot; y 0.0</span>
+      <span class="calib-model" id="calibModel">Modelo: Agradecer-1</span>
+      <div class="calib-angle">
+        <button type="button" class="calib-rot" data-rot="-5" aria-label="Restar 5 grados">&minus;5&deg;</button>
+        <input type="range" id="angleRange" min="-180" max="180" step="1" value="0" aria-label="Rotación de la hoja seleccionada">
+        <button type="button" class="calib-rot" data-rot="5" aria-label="Sumar 5 grados">+5&deg;</button>
+        <span class="calib-angle-value" id="angleValue">0&deg;</span>
+      </div>
+    </div>
+    <div class="calib-actions">
+      <button type="button" class="calib-action primary" id="copyJsonBtn">Copiar JSON de Coordenadas</button>
+      <button type="button" class="calib-action" id="saveSlotsBtn">Guardar en LocalStorage</button>
+      <button type="button" class="calib-action ghost" id="restoreSlotsBtn">Restaurar</button>
+      <button type="button" class="calib-action ghost" id="exitCalibBtn">Salir</button>
+    </div>
+  </aside>
+
+  <!-- Lightbox de lectura -->
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lightbox-backdrop" data-close="1" aria-hidden="true"></div>
+    <article class="lb-card" id="lbCard" role="dialog" aria-modal="true" aria-labelledby="lbTitle" aria-describedby="lbText" tabindex="-1" data-cat="agradecer">
+      <button class="lb-close" id="lbClose" type="button" aria-label="Cerrar la tarjeta y volver al árbol">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+
+      <div class="lb-left">
+        <span class="lb-cat"><span class="lb-cat-dot" aria-hidden="true"></span><span id="lbCat">Agradecer</span></span>
+        <h2 class="lb-title" id="lbTitle">Las personas que nos cuidan</h2>
+        <p class="lb-text" id="lbText"></p>
+        <button class="lb-back" id="lbBack" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+          Volver al árbol
+        </button>
+      </div>
+
+      <div class="lb-right">
+        <div class="lb-aura" aria-hidden="true"></div>
+        <div class="lb-leaf-wrap">
+          <img class="lb-leaf" id="lbLeafImg" src="Agradecer-1.webp" alt="" draggable="false">
+          <span class="lb-word" id="lbWord">Familia</span>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Explicación del letrero Día de Gracias -->
+  <div class="sign-modal" id="signModal" hidden>
+    <div class="sign-backdrop" aria-hidden="true"></div>
+    <article class="sign-card" id="signCard" role="dialog" aria-modal="true" aria-labelledby="signTitle" aria-describedby="signText" tabindex="-1">
+      <button class="lb-close sign-close" id="signClose" type="button" aria-label="Cerrar la explicación y volver al jardín">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+
+      <h2 class="sign-title" id="signTitle">Día de Gracias</h2>
+      <p class="sign-subtitle">Thanksgiving Day</p>
+      <div class="sign-rule" aria-hidden="true"></div>
+
+      <div class="sign-copy" id="signText">
+        <p>El Día de Gracias es una celebración muy especial dedicada a detenernos un momento, mirar todo lo bueno que tenemos en nuestra vida y decir «gracias» de corazón.</p>
+        <p>Su origen nació como una fiesta de la cosecha, cuando las familias y vecinos se reunían alrededor de la mesa para agradecer por los alimentos recogidos y compartir lo que tenían con quienes los rodeaban.</p>
+        <p>Hoy lo celebramos recordando tres gestos que llenan de luz nuestro salón y nuestro hogar:</p>
+        <ul>
+          <li>Agradecer por las personas, los cuidados y las alegrías de cada día.</li>
+          <li>Ser amables con palabras dulces, paciencia y ayuda sincera.</li>
+          <li>Compartir nuestro tiempo, nuestras ideas y lo que tenemos con los demás.</li>
+        </ul>
+        <p>Cada vez que pulsas uno de los botones mágicos del jardín, una nueva hoja nace en nuestro árbol para recordarnos que la gratitud crece cuando la compartimos.</p>
+      </div>
+
+      <button class="sign-cta" id="signCloseBtn" type="button">¡Vamos a llenar el árbol!</button>
+    </article>
+  </div>
+
+  <!-- Confirmación para reiniciar -->
+  <div class="confirm" id="confirm" hidden>
+    <div class="confirm-backdrop" data-confirm-close="1" aria-hidden="true"></div>
+    <div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+      <img class="confirm-leaf" src="Agradecer-1.webp" alt="" aria-hidden="true">
+      <h2 id="confirmTitle">¿Empezar de nuevo?</h2>
+      <p id="confirmText">Se quitarán todas las hojas del árbol para que otro grupo de alumnos pueda jugar.</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn ghost" id="confirmCancel" type="button">Cancelar</button>
+        <button class="confirm-btn primary" id="confirmReset" type="button">Sí, reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <audio id="music" src="Acoustic-Guitar-Music.mp3" loop preload="metadata"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
