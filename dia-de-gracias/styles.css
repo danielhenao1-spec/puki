@@ -621,7 +621,10 @@ body.calibrating .cat-btn {
   transition: opacity 0.25s ease, transform 0.25s ease, background 0.25s ease;
 }
 
-.hud-btn svg { width: 54%; height: 54%; }
+.hud-btn svg { display: block; width: 54%; height: 54%; }
+.hud-btn .i-compress { display: none; }
+.hud-btn.is-fullscreen .i-expand { display: none; }
+.hud-btn.is-fullscreen .i-compress { display: block; }
 
 .hud-btn:hover {
   opacity: 1;

@@ -269,6 +269,7 @@
   const playBtn = $("#playBtn");
   const audioPill = $("#audioPill");
   const volume = $("#volume");
+  const fullscreenBtn = $("#fullscreenBtn");
   const angleRange = $("#angleRange");
   const angleValue = $("#angleValue");
   const calibNodeLabel = $("#calibNodeLabel");
@@ -798,9 +799,51 @@
   }
 
   /* ------------------------------------------------------------
-     11. Sonido ambiental
+     10.2. Pantalla completa
      ------------------------------------------------------------ */
 
+  function isFullscreenActive() {
+    return Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+
+  function updateFullscreenButton() {
+    const active = isFullscreenActive();
+    fullscreenBtn.classList.toggle("is-fullscreen", active);
+    fullscreenBtn.setAttribute("aria-pressed", String(active));
+    fullscreenBtn.setAttribute(
+      "aria-label",
+      active ? "Salir de pantalla completa" : "Activar pantalla completa"
+    );
+    fullscreenBtn.title = active ? "Salir de pantalla completa" : "Pantalla completa";
+  }
+
+  async function toggleFullscreen() {
+    try {
+      if (isFullscreenActive()) {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      } else {
+        const root = document.documentElement;
+        if (root.requestFullscreen) {
+          await root.requestFullscreen();
+        } else if (root.webkitRequestFullscreen) {
+          root.webkitRequestFullscreen();
+        } else {
+          throw new Error("fullscreen-unsupported");
+        }
+      }
+    } catch (error) {
+      showToast("No se pudo activar la pantalla completa en este navegador.", 3600);
+    }
+    updateFullscreenButton();
+  }
+
+  /* ------------------------------------------------------------
+     11. Sonido ambiental
+     ------------------------------------------------------------ */
   function initAudio() {
     music.volume = 0.4;
     volume.value = "0.4";
@@ -1113,6 +1156,9 @@
 
     calibBtn.addEventListener("click", toggleCalibration);
     $("#exitCalibBtn").addEventListener("click", exitCalibration);
+    fullscreenBtn.addEventListener("click", toggleFullscreen);
+    document.addEventListener("fullscreenchange", updateFullscreenButton);
+    document.addEventListener("webkitfullscreenchange", updateFullscreenButton);
 
     signBtn.addEventListener("click", openSignModal);
     signClose.addEventListener("click", closeSignModal);
@@ -1229,6 +1275,7 @@
     initAudio();
     updateAllCategoryButtons();
     bindEvents();
+    updateFullscreenButton();
 
     document.documentElement.dataset.ready = "true";
   }

@@ -9,6 +9,7 @@ Abre `index.html` en un navegador moderno. La escena mantiene una proporción 16
 - Pulsa uno de los tres botones para hacer nacer una hoja y abrir su tarjeta.
 - Toca cualquier hoja del árbol para volver a leerla.
 - Toca el letrero **DIA DE GRACIAS** para abrir la explicación de la celebración.
+- Usa el botón de **pantalla completa** de la esquina superior izquierda para proyectar la escena sin las barras del navegador.
 - Usa el reproductor de la esquina superior derecha para la música ambiental y el volumen.
 - El botón de reinicio de la esquina superior izquierda comienza una nueva sesión.
 
